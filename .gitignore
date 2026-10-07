@@ -1,6 +1,48 @@
+# Dépendances et build
 node_modules/
 dist/
+.vite/
+*.local
+
+# Variables d'environnement et secrets
 .env
 .env.*
 !.env.example
+*.pem
+*.key
 
+# Configuration personnelle d'outils (non publiée)
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+
+# Netlify (dossier local de la CLI)
+.netlify/
+
+# Journaux
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Éditeurs
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*~
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers personnels déposés à la racine (photos originales, captures d'écran)
+# Les images du site se trouvent dans public/images/.
+/*.jpg
+/*.jpeg
+/*.png
+/*.heic
+/*.webp
+/Screenshot*

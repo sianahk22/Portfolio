@@ -1,56 +1,88 @@
-# Portfolio · Anaïs Bay
+# Anaïs Bay · Portfolio
 
-Portfolio one-page (React + Vite) de développeuse web freelance.
+Développeuse web junior à Paris : **applications web, automatisation et IA**.
 
-## Prérequis
+Je suis étudiante en informatique et en software engineering. Je conçois des sites et des
+applications web, et j'automatise les tâches répétitives, y compris avec l'intelligence
+artificielle, avec une règle simple : l'IA aide, mais une personne garde le contrôle sur les
+décisions importantes.
 
-Node.js 18 ou plus récent.
+Ce dépôt contient le code source de mon portfolio. Il présente mes services, mes compétences et
+mes projets, et permet aux clients comme aux recruteurs de me contacter.
 
-## Commandes
+## Services
+
+- **Sites web & landing pages** : sites clairs, adaptés aux mobiles et accessibles, pour
+  indépendants, associations et commerces.
+- **Applications web sur mesure** : outils pensés pour un besoin précis (prise de demandes,
+  tableau de suivi, espace de gestion simple).
+- **Automatisation & IA** : relier des outils entre eux et automatiser les tâches répétitives,
+  avec une validation humaine.
+
+Chaque projet est sur devis. Je suis également ouverte aux stages, alternances, CDI, missions
+freelance et collaborations.
+
+## Technologies utilisées
+
+- [React 18](https://react.dev/) et JavaScript (JSX)
+- [Vite 5](https://vitejs.dev/) pour le développement et le build
+- CSS sans framework (variables CSS, approche mobile-first)
+- [Netlify](https://www.netlify.com/) pour l'hébergement et Netlify Forms pour le formulaire
+
+## Fonctionnalités
+
+- Site one-page responsive, du mobile au grand écran, avec navigation horizontale et menu mobile
+- Accessibilité : lien d'évitement, navigation au clavier, contrastes vérifiés, textes
+  alternatifs, respect de la préférence « réduire les animations »
+- Formulaire de contact qualifié (profil, besoin, budget, délai) avec validation, messages
+  d'erreur, confirmation d'envoi et protection anti-spam
+- Référencement : métadonnées, aperçu de partage (Open Graph), données structurées,
+  `robots.txt` et `sitemap.xml`
+- Images optimisées (AVIF, WebP et JPEG de secours) et chargement rapide
+- En-têtes de sécurité et de cache configurés pour Netlify
+- Contenu séparé du code : tous les textes sont dans `src/data/content.js`
+
+## Installation et lancement
+
+Prérequis : [Node.js](https://nodejs.org/) 18 ou plus récent.
 
 ```bash
 npm install        # installer les dépendances
-npm run dev        # lancer en local (http://localhost:5173)
-npm run build      # construire pour la production (dossier dist/)
-npm run preview    # prévisualiser le build de production
+npm run dev        # lancer en local sur http://localhost:5173
 ```
 
-## Où modifier le contenu
+## Build de production
 
-Tout le contenu (coordonnées, offres, étapes, textes) est dans `src/data/content.js`.
-Les sections sont dans `src/components/`, les styles dans `src/styles.css`.
+```bash
+npm run build      # génère le site statique dans dist/
+npm run preview    # prévisualise le build en local
+```
 
-## Remplacer la photo
+## Structure
 
-1. Place ta photo dans `public/images/` (par exemple `anais.jpg`, format portrait 4:5 conseillé).
-2. Dans `src/data/content.js`, mets `portrait: "/images/anais.jpg"`.
+```
+index.html            métadonnées SEO et copie du formulaire pour Netlify
+netlify.toml          configuration du déploiement Netlify
+public/               images, favicon, robots.txt, sitemap.xml
+src/data/content.js   tout le contenu du site
+src/components/       une section par composant
+src/styles.css        feuille de styles unique
+```
 
-La photo apparaît dans le hero et dans « À propos », dans un cadre arrondi (jamais en plein écran).
+## Déploiement (Netlify)
 
-## Remplacer la maquette Maison Sésame
+Le fichier `netlify.toml` contient la configuration :
 
-1. Place une capture dans `public/images/` (par exemple `maison-sesame.png`).
-2. Dans `src/data/content.js`, mets `demoImage: "/images/maison-sesame.png"`.
+- commande de build : `npm run build`
+- dossier publié : `dist`
+- en-têtes de sécurité (CSP, protection contre l'intégration en iframe…) et règles de cache
 
-Le projet reste présenté comme fictif.
+Le formulaire de contact utilise Netlify Forms : la détection des formulaires doit être activée
+dans le tableau de bord Netlify. L'envoi ne fonctionne qu'une fois le site déployé sur Netlify ;
+en local, le formulaire affiche un message d'erreur, ce qui est normal.
 
-## Formulaire de contact
+## Liens
 
-Le formulaire n'envoie aucun message : il prépare un email (`mailto:`) dans la messagerie du visiteur.
-Les boutons « Envoyer un email » et « Appeler » fonctionnent directement.
-
-Pour un vrai envoi plus tard, brancher un service (Formspree, Netlify Forms, etc.) dans
-`src/components/Contact.jsx`, puis adapter le texte explicatif.
-
-## Avant la mise en ligne
-
-- Vérifier que `bonjour@anaisweb.tech` et le domaine `anaisweb.tech` sont actifs.
-- Ajouter une page de mentions légales (obligatoire pour un site professionnel en France :
-  identité de l'éditeur, statut, SIRET si micro-entreprise, hébergeur, contact).
-- Ajouter une mention RGPD si le formulaire est connecté à un service d'envoi.
-- Préciser la durée de correction des bugs après livraison (section Maintenance).
-
-## Déploiement
-
-Le dossier `dist/` est un site statique : il peut être déployé sur Netlify, Cloudflare Pages,
-Vercel ou GitHub Pages.
+- GitHub : [github.com/sianahk22](https://github.com/sianahk22)
+- Code source : [github.com/sianahk22/Portfolio](https://github.com/sianahk22/Portfolio)
+- Contact : via le formulaire du site

@@ -4,15 +4,76 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Anaïs Bay · Développeuse web freelance à Paris · Sites vitrines</title>
+    <title>Anaïs Bay · Développeuse web junior · Applications web, automatisation & IA</title>
     <meta name="description"
-        content="Anaïs Bay, développeuse web freelance à Paris. Sites vitrines pour petites entreprises et indépendants, à partir de 600 €. Livraison habituelle sous environ 2 semaines." />
+        content="Anaïs Bay, développeuse web junior à Paris : sites et applications web sur mesure, automatisation des tâches répétitives et intégration de l'IA. Sur devis. Ouverte aux stages, alternances, CDI et missions." />
+    <meta name="author" content="Anaïs Bay" />
+    <link rel="canonical" href="https://anaisweb.tech/" />
     <meta name="theme-color" content="#6D28D9" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Aperçu lors d'un partage (LinkedIn, WhatsApp, X…) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Anaïs Bay" />
+    <meta property="og:url" content="https://anaisweb.tech/" />
+    <meta property="og:title" content="Anaïs Bay · Développeuse web junior" />
+    <meta property="og:description"
+        content="Sites et applications web, automatisation et IA. Sur devis, à Paris et à distance." />
+    <meta property="og:image" content="https://anaisweb.tech/images/og-anais-bay.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Anaïs Bay, développeuse web junior : applications web, automatisation et IA" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Préchargement de la photo du haut de page -->
+    <link rel="preload" as="image" type="image/avif"
+        imagesrcset="/images/portrait-anais-bay-320.avif 320w, /images/portrait-anais-bay-480.avif 480w, /images/portrait-anais-bay-530.avif 530w"
+        imagesizes="(min-width: 900px) 340px, 280px" />
+
+    <!-- Données structurées pour les moteurs de recherche -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Anaïs Bay",
+        "jobTitle": "Développeuse web junior",
+        "description": "Sites et applications web, automatisation et intégration de l'IA.",
+        "url": "https://anaisweb.tech/",
+        "image": "https://anaisweb.tech/images/portrait-anais-bay-480.jpg",
+        "email": "mailto:bonjour@anaisweb.tech",
+        "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" },
+        "knowsLanguage": ["fr", "ar", "en"],
+        "sameAs": ["https://github.com/sianahk22", "https://www.linkedin.com/in/anais-ben-chabane"]
+    }
+    </script>
 </head>
 
 <body>
+    <!--
+        Copie cachée du formulaire de contact : Netlify lit ce HTML au déploiement
+        pour détecter le formulaire. Elle doit contenir les mêmes champs que Contact.jsx.
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input name="bot-field" />
+        <input name="nom" />
+        <input name="email" type="email" />
+        <input name="profil" />
+        <input name="besoin" />
+        <input name="budget" />
+        <input name="delai" />
+        <textarea name="message"></textarea>
+    </form>
+
     <div id="root"></div>
+    <noscript>
+        <p>
+            Anaïs Bay, développeuse web junior à Paris : applications web, automatisation et IA.
+            Ce site a besoin de JavaScript. Contact : <a href="mailto:bonjour@anaisweb.tech">bonjour@anaisweb.tech</a>
+        </p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
 </body>
 

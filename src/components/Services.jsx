@@ -4,19 +4,24 @@ import { services } from "../data/content.js";
 
 export default function Services() {
   return (
-    <section id="services" className="section section--alt">
+    <section id="services" className="section">
       <div className="container">
         <SectionHeader
           eyebrow="Services"
-          title="Du site le plus simple au plus complet"
-          intro="Chaque projet commence à partir de 600 €. Le devis dépend de votre besoin : nombre de pages, contenus, fonctionnalités."
+          title="Trois façons de vous aider"
+          intro="Chaque projet est sur devis, après un premier échange sur votre besoin."
         />
-        <div className="grid">
+        <div className="grid grid--3">
           {services.map((s) => (
-            <article className="card" key={s.title}>
+            <article className="card service reveal" key={s.title}>
               <h3>{s.title}</h3>
+              <p className="service__for">{s.for}</p>
               <p>{s.text}</p>
-              <p className="card__price">À partir de 600 €</p>
+              <ul className="checklist">
+                {s.items.map((i) => (
+                  <li key={i}>{i}</li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>

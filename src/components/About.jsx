@@ -1,23 +1,32 @@
 import SectionHeader from "./SectionHeader.jsx";
-import PortraitFrame from "./PortraitFrame.jsx";
-import { site } from "../data/content.js";
+import { site, about } from "../data/content.js";
 
 export default function About() {
   return (
-    <section id="a-propos" className="section">
+    <section id="a-propos" className="section section--alt">
       <div className="container about">
-        <PortraitFrame />
-        <div>
-          <SectionHeader eyebrow="À propos" title={site.name} />
-          <p>
-            Anaïs Bay est développeuse web freelance et étudiante en informatique et software
-            engineering à Paris. Elle accompagne les petites entreprises, indépendants et porteurs
-            de projets dans la création d'une présence en ligne claire, moderne et adaptée aux
-            mobiles.
+        <div className="reveal">
+          <SectionHeader eyebrow="À propos" title={`Je suis ${site.name}`} />
+          {about.text.map((t) => (
+            <p key={t}>{t}</p>
+          ))}
+          <p className="about__links">
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn<span className="sr-only"> (nouvel onglet)</span>
+            </a>
+            <a href={site.github} target="_blank" rel="noopener noreferrer">
+              GitHub<span className="sr-only"> (nouvel onglet)</span>
+            </a>
           </p>
-          <p className="muted">Langues : français, arabe et anglais.</p>
-          <p className="muted">Technologies : HTML, CSS, JavaScript, Python et React.</p>
         </div>
+        <dl className="card facts reveal">
+          {about.facts.map((f) => (
+            <div key={f.label}>
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

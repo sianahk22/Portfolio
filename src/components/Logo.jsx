@@ -1,11 +1,12 @@
+// Décoratif : il est toujours affiché à côté du nom, qui suffit aux lecteurs d'écran.
 export default function Logo({ size = 40 }) {
     return (
         <svg
             width={size}
             height={size}
             viewBox="0 0 64 64"
-            role="img"
-            aria-label="Logo AB"
+            aria-hidden="true"
+            focusable="false"
             className="logo"
         >
             <rect width="64" height="64" rx="16" fill="#6D28D9" />
