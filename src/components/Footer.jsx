@@ -56,14 +56,14 @@ export default function Footer() {
 
         <details id="mentions-legales" className="legal" ref={legalRef}>
           <summary>Mentions légales et confidentialité</summary>
-          <h2 className="h3">Éditrice du site</h2>
+          <h3>Éditrice du site</h3>
           <p>
             {site.name}, développeuse web junior, étudiante, {site.location}. Contact :{" "}
             <a href={`mailto:${site.email}`}>{site.email}</a>.
           </p>
-          <h2 className="h3">Hébergement</h2>
+          <h3>Hébergement</h3>
           <p>{legal.host}</p>
-          <h2 className="h3">Données personnelles</h2>
+          <h3>Données personnelles</h3>
           <p>
             Les informations envoyées via le formulaire de contact (nom, email, profil, besoin,
             budget, délai, message) servent uniquement à répondre à votre demande. Elles sont

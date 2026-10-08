@@ -97,7 +97,7 @@ export const projects = [
   {
     title: "Ce portfolio",
     type: "Projet personnel",
-    text: "Site one-page conçu et développé de A à Z : contenu séparé du code, design responsive, accessibilité, référencement et formulaire de contact prévu pour Netlify Forms avec protection anti-spam.",
+    text: "Site one-page conçu et développé de A à Z : contenu séparé du code, design responsive, accessibilité, référencement et formulaire de contact relié à Netlify Forms avec protection anti-spam.",
     tech: ["React", "Vite", "CSS", "Netlify Forms"],
     demo: null,
     code: "https://github.com/sianahk22/Portfolio",

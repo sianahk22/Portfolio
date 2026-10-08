@@ -8,7 +8,7 @@ export default function Process() {
         <SectionHeader
           eyebrow="Méthode"
           title="Comment se passe un projet"
-          intro="Un déroulé simple et transparent, du premier échange à la livraison."
+          intro="Un déroulé simple et transparent, du premier échange à la livraison. Aucune connaissance technique n'est nécessaire : je vous explique chaque étape avec des mots simples."
         />
         <ol className="steps">
           {steps.map((s) => (

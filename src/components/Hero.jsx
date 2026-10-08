@@ -7,10 +7,11 @@ export default function Hero() {
     <section id="accueil" className="section hero">
       <div className="container hero__grid">
         <div className="hero__text">
-          <p className="eyebrow">
-            {site.name} · {site.role}
-          </p>
-          <h1>{hero.title}</h1>
+          {/* Le H1 porte le nom et le métier (référencement) ; le slogan garde le style d'un grand titre. */}
+          <h1 className="eyebrow">
+            {site.name} · {site.role} à {site.location}
+          </h1>
+          <p className="hero__title">{hero.title}</p>
           <p className="lead">{hero.lead}</p>
 
           <ul className="pills" aria-label="En bref">

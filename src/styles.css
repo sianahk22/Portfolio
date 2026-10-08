@@ -48,14 +48,16 @@ body {
 h1,
 h2,
 h3,
-.h3 {
+.h3,
+.hero__title {
     line-height: 1.2;
     margin: 0 0 12px;
     color: var(--ink);
     text-wrap: balance;
 }
 
-h1 {
+h1,
+.hero__title {
     font-size: clamp(2.1rem, 5.2vw, 3.4rem);
     letter-spacing: -0.025em;
     font-weight: 800;
@@ -874,7 +876,7 @@ img {
     color: var(--white);
 }
 
-.legal h2 {
+.legal h3 {
     color: var(--white);
     font-size: 1rem;
     margin-top: 20px;

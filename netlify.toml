@@ -26,3 +26,10 @@
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# L'adresse technique Netlify redirige vers le domaine officiel (évite le contenu en double).
+[[redirects]]
+  from = "https://anaisweb.netlify.app/*"
+  to = "https://anaisweb.tech/:splat"
+  status = 301
+  force = true
