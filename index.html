@@ -9,7 +9,7 @@
         content="Je conçois des sites web modernes, responsives et automatisés pour les indépendants, petites entreprises et projets personnels." />
     <meta name="author" content="Anaïs Bay" />
     <link rel="canonical" href="https://anaisweb.tech/" />
-    <meta name="theme-color" content="#6D28D9" />
+    <meta name="theme-color" content="#A8461F" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -28,6 +28,11 @@
     <meta property="og:image:alt" content="Anaïs Bay, développeuse web : sites web modernes, responsives et automatisés" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- Préchargement de la photo du premier écran -->
+    <link rel="preload" as="image" type="image/avif"
+        imagesrcset="/images/espace-travail-800.avif 800w, /images/espace-travail-1400.avif 1400w"
+        imagesizes="(min-width: 960px) 560px, 92vw" />
+
     <!-- Données structurées pour les moteurs de recherche -->
     <script type="application/ld+json">
     {
@@ -37,7 +42,7 @@
         "jobTitle": "Développeuse web",
         "description": "Sites web modernes, responsives et automatisés.",
         "url": "https://anaisweb.tech/",
-        "image": "https://anaisweb.tech/images/portrait-anais-bay-480.jpg",
+        "image": "https://anaisweb.tech/images/og-anais-bay.jpg",
         "email": "mailto:bonjour@anaisweb.tech",
         "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" },
         "knowsLanguage": ["fr", "ar", "en"],

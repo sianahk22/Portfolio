@@ -9,7 +9,7 @@ export default function Logo({ size = 40 }) {
             focusable="false"
             className="logo"
         >
-            <rect width="64" height="64" rx="16" fill="#6D28D9" />
+            <rect width="64" height="64" rx="16" fill="#A8461F" />
             <text
                 x="32"
                 y="43"

@@ -4,16 +4,16 @@ import { steps, conditions, conditionsNote } from "../data/content.js";
 
 export default function Process() {
   return (
-    <section id="methode" className="section section--panel">
+    <section id="methode" className="section section--soft">
       <div className="container">
         <SectionHeader
           eyebrow="Méthode"
-          title="Comment je travaille avec vous"
+          title="Une collaboration simple et transparente"
           intro="Aucune connaissance technique n'est nécessaire : je vous explique chaque étape avec des mots simples."
         />
         <ol className="steps">
           {steps.map((s, i) => (
-            <li key={s.title} className="card step reveal">
+            <li key={s.title} className="step reveal">
               <span className="step__num" aria-hidden="true">
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -22,13 +22,12 @@ export default function Process() {
             </li>
           ))}
         </ol>
-
-        <div className="card conditions reveal">
+        <div className="conditions reveal">
           <h3 className="sr-only">Conditions</h3>
           <ul className="conditions__list">
             {conditions.map((c) => (
               <li key={c}>
-                <Icon name="check" size={18} />
+                <Icon name="check" size={16} />
                 {c}
               </li>
             ))}

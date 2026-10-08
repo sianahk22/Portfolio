@@ -10,16 +10,6 @@ export const site = {
   github: "https://github.com/sianahk22",
   linkedin: "https://www.linkedin.com/in/anais-ben-chabane",
   location: "Paris",
-  // Photo : versions optimisées dans public/images/ (AVIF, WebP, JPEG de secours).
-  // Mettre `portrait: null` affiche un emplacement réservé à la place.
-  portrait: {
-    avif: "/images/portrait-anais-bay-320.avif 320w, /images/portrait-anais-bay-480.avif 480w, /images/portrait-anais-bay-530.avif 530w",
-    webp: "/images/portrait-anais-bay-320.webp 320w, /images/portrait-anais-bay-480.webp 480w, /images/portrait-anais-bay-530.webp 530w",
-    fallback: "/images/portrait-anais-bay-480.jpg",
-    width: 480,
-    height: 600,
-    alt: "Portrait d'Anaïs Bay, souriante, avec de grandes lunettes noires et des écouteurs",
-  },
 };
 
 export const nav = [
@@ -32,51 +22,49 @@ export const nav = [
 
 export const hero = {
   badge: "Développeuse web · Paris",
-  title: "Je crée des expériences web modernes, claires et efficaces.",
-  lead: "Je conçois des sites web responsives et automatisés pour aider les indépendants, les petites entreprises et les porteurs de projets à présenter leur activité en ligne.",
+  title: "Des sites web modernes, pensés pour votre activité.",
+  lead: "Je conçois et développe des sites responsives et automatisés pour les indépendants, les petites entreprises et les porteurs de projets : clairs, rapides et faciles à faire évoluer.",
+  // Photo d'ambiance libre de droits (CC0, domaine public) : « White cup and MacBook »,
+  // Alex Knight (Unsplash), via Wikimedia Commons. Mention de l'auteur non obligatoire.
+  photo: {
+    avif: "/images/espace-travail-800.avif 800w, /images/espace-travail-1400.avif 1400w",
+    webp: "/images/espace-travail-800.webp 800w, /images/espace-travail-1400.webp 1400w",
+    fallback: "/images/espace-travail-1200.jpg",
+    width: 1200,
+    height: 747,
+    alt: "Ordinateur portable et tasse de café sur une table en bois, dans un café lumineux",
+  },
 };
 
-// Mini tableau de bord du hero : uniquement des faits vérifiés sur anaisweb.tech.
-export const dashboard = {
+// Tuiles du hero : uniquement des faits vérifiés sur anaisweb.tech.
+export const status = {
   url: "anaisweb.tech",
-  status: "En ligne",
-  tiles: [
-    { label: "Sécurité", value: "HTTPS actif" },
-    { label: "Formulaire", value: "Connecté" },
-    { label: "Affichage", value: "Responsive" },
-    { label: "Hébergement", value: "Netlify" },
-  ],
+  label: "En ligne",
+  checks: ["HTTPS actif", "Formulaire connecté", "Responsive"],
 };
-
-// Cartes « dashboard » : intitulés qualitatifs, sans chiffres inventés.
-export const highlights = [
-  { icon: "devices", title: "Design responsive", text: "Mobile, tablette et ordinateur." },
-  { icon: "code", title: "Code propre", text: "Structuré, lisible et facile à faire évoluer." },
-  { icon: "mail", title: "Formulaires connectés", text: "Les demandes arrivent directement par email." },
-  { icon: "rocket", title: "Mise en ligne", text: "Hébergement, nom de domaine et HTTPS." },
-];
-
-export const about = {
-  title: "Je transforme une idée ou une activité en une présence web claire, moderne et accessible.",
-  blocks: [
-    { title: "Qui je suis", text: "Développeuse web à Paris, étudiante en informatique et en software engineering." },
-    { title: "Mon approche", text: "Comprendre votre besoin, proposer une solution simple, puis expliquer clairement ce que je livre." },
-    { title: "Ce qui compte", text: "Des sites rapides, lisibles sur mobile et faciles à faire évoluer." },
-    { title: "Ouverte à", text: "Missions freelance, collaborations, stages, alternances et CDI." },
-  ],
-  tools: ["HTML", "CSS", "JavaScript", "React", "Python", "Git & GitHub", "Netlify"],
-  languages: "Français, arabe, anglais",
-};
+export const stack = ["React", "Vite", "Netlify"];
 
 export const services = [
-  { icon: "layout", title: "Création de site vitrine", text: "Un site clair pour présenter votre activité et permettre aux visiteurs de vous contacter." },
-  { icon: "user", title: "Portfolio professionnel", text: "Une vitrine soignée pour mettre en valeur votre parcours et vos réalisations." },
-  { icon: "target", title: "Landing page", text: "Une page unique, centrée sur une action : prendre contact, réserver ou s'inscrire." },
-  { icon: "devices", title: "Interface responsive", text: "Un affichage adapté à chaque écran, du téléphone à l'ordinateur." },
-  { icon: "mail", title: "Formulaire de contact", text: "Un formulaire validé, protégé contre le spam et relié à votre boîte email." },
-  { icon: "rocket", title: "Mise en ligne et déploiement", text: "Hébergement, nom de domaine et HTTPS : je m'occupe de la publication." },
-  { icon: "zap", title: "Automatisation simple", text: "Relier vos outils pour gagner du temps. L'IA peut aider, toujours avec une validation humaine." },
-  { icon: "search", title: "Visibilité en ligne", text: "Titres, descriptions, sitemap et Google Search Console, pour être trouvé plus facilement." },
+  {
+    icon: "layout",
+    title: "Sites vitrines et landing pages",
+    text: "Des pages claires et rapides, pensées pour transformer vos visiteurs en contacts.",
+  },
+  {
+    icon: "user",
+    title: "Portfolios professionnels",
+    text: "Une vitrine soignée pour présenter votre parcours, vos réalisations et vos services.",
+  },
+  {
+    icon: "zap",
+    title: "Formulaires et automatisation",
+    text: "Des formulaires fiables et protégés, et des tâches répétitives automatisées pour gagner du temps.",
+  },
+  {
+    icon: "rocket",
+    title: "Mise en ligne et visibilité",
+    text: "Hébergement, nom de domaine, HTTPS et référencement de base, pour être trouvé sur Google.",
+  },
 ];
 
 // Projets réels uniquement. Pour en ajouter un, copier un objet et remplir les champs.
@@ -84,8 +72,8 @@ export const services = [
 export const projects = [
   {
     title: "anaisweb.tech",
-    type: "Projet personnel",
-    text: "Conception, développement et mise en ligne de ce portfolio : design responsive, formulaire connecté, référencement et déploiement continu.",
+    type: "Conception et développement",
+    text: "Mon site professionnel, conçu de A à Z : design responsive, formulaire de contact connecté, référencement et déploiement continu sur Netlify.",
     tech: ["React", "Vite", "CSS", "Netlify Forms"],
     image: {
       avif: "/images/projet-portfolio.avif",
@@ -93,21 +81,30 @@ export const projects = [
       fallback: "/images/projet-portfolio.jpg",
       width: 1200,
       height: 750,
-      alt: "Aperçu de la page d'accueil du portfolio anaisweb.tech",
+      alt: "Aperçu de la page d'accueil du site anaisweb.tech",
     },
     demo: "https://anaisweb.tech",
     code: "https://github.com/sianahk22/Portfolio",
   },
 ];
+export const projectsNote = "D'autres réalisations sont en cours et seront présentées ici prochainement.";
 
-// Nombre de cartes « Nouveau projet à venir » affichées après les projets réels.
-export const upcomingProjects = 2;
+export const about = {
+  title: "Je transforme une idée ou une activité en une présence web claire, moderne et accessible.",
+  text: "Basée à Paris, je travaille avec des indépendants, des petites structures et des porteurs de projets. Mon approche est simple : comprendre votre besoin, proposer une solution adaptée, puis vous expliquer clairement ce que je livre.",
+  facts: [
+    { label: "Formation", value: "Informatique et software engineering" },
+    { label: "Langues", value: "Français, arabe, anglais" },
+    { label: "Ouverte à", value: "Missions, collaborations et postes en entreprise" },
+  ],
+  tools: ["HTML", "CSS", "JavaScript", "React", "Vite", "Python", "Git & GitHub", "Netlify"],
+};
 
 export const steps = [
-  { title: "Comprendre le besoin", text: "Un premier échange pour cerner vos objectifs, votre public et vos contraintes." },
-  { title: "Concevoir la structure et le design", text: "Je propose l'organisation des pages et une direction visuelle, à valider ensemble." },
-  { title: "Développer et connecter", text: "Je construis le site, le formulaire et les intégrations, en vous montrant l'avancement." },
-  { title: "Mettre en ligne et améliorer", text: "Je publie le site, je vérifie chaque détail, puis je l'ajuste selon vos retours." },
+  { title: "Comprendre", text: "Vos objectifs, votre public et vos contraintes." },
+  { title: "Concevoir", text: "La structure des pages et la direction visuelle." },
+  { title: "Développer", text: "Le site, le formulaire et les intégrations." },
+  { title: "Mettre en ligne", text: "La publication, les vérifications, puis les ajustements." },
 ];
 
 // Conditions essentielles, en version courte.
@@ -118,19 +115,7 @@ export const conditions = [
   "Maintenance possible, sur devis",
 ];
 export const conditionsNote =
-  "Toute demande hors du périmètre validé (nouvelle page, nouvelle fonctionnalité) est annoncée et chiffrée avant d'être réalisée. Le délai démarre à la réception des contenus.";
-
-// Technologies réellement utilisées pour ce site.
-export const technologies = [
-  { name: "HTML", role: "Structure" },
-  { name: "CSS", role: "Design" },
-  { name: "JavaScript", role: "Interactions" },
-  { name: "React", role: "Interface" },
-  { name: "Vite", role: "Build" },
-  { name: "Git", role: "Versions" },
-  { name: "GitHub", role: "Code source" },
-  { name: "Netlify", role: "Hébergement" },
-];
+  "Toute demande hors du périmètre validé est annoncée et chiffrée avant d'être réalisée. Le délai démarre à la réception des contenus.";
 
 // Listes du formulaire de contact.
 export const contactOptions = {

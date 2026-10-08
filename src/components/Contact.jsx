@@ -92,7 +92,7 @@ export default function Contact() {
   });
 
   return (
-    <section id="contact" className="section section--panel">
+    <section id="contact" className="section">
       <div className="container">
         <SectionHeader
           eyebrow="Contact"

@@ -30,7 +30,7 @@ stages, alternances et CDI.
 
 ## Fonctionnalités
 
-- Interface inspirée des tableaux de bord : cartes, mini tableau de bord, hiérarchie visuelle forte
+- Design chaleureux et épuré : palette crème et terracotta, mise en page en tuiles, hiérarchie visuelle forte
 - Site one-page responsive, avec navigation collante et menu mobile accessible
 - Accessibilité : lien d'évitement, navigation au clavier, contrastes vérifiés, textes
   alternatifs, respect de la préférence « réduire les animations »
@@ -87,3 +87,9 @@ en local, le formulaire affiche un message d'erreur, ce qui est normal.
 - Site : [anaisweb.tech](https://anaisweb.tech)
 - Code source : [github.com/sianahk22/Portfolio](https://github.com/sianahk22/Portfolio)
 - Contact : via le formulaire du site
+
+## Crédits
+
+Photo d'ambiance : « White cup and MacBook », Alex Knight (Unsplash), via
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:White_cup_and_MacBook_(Unsplash).jpg),
+licence CC0 (domaine public).

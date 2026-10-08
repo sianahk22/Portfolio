@@ -6,8 +6,8 @@ body {
     padding: 24px;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f7f5ff;
-    color: #1f1b2d;
+    background: #faf7f2;
+    color: #292524;
     text-align: center;
     line-height: 1.6;
 }
@@ -15,17 +15,17 @@ body {
 .code {
     font-size: 4rem;
     font-weight: 800;
-    color: #6d28d9;
+    color: #a8461f;
     margin: 0;
 }
 
 h1 {
-    color: #1e1335;
+    color: #1c1917;
     margin: 0 0 12px;
 }
 
 a {
-    color: #6d28d9;
+    color: #a8461f;
 }
 
 .btn {
@@ -33,24 +33,24 @@ a {
     margin-top: 12px;
     padding: 12px 22px;
     border-radius: 999px;
-    background: #6d28d9;
+    background: #a8461f;
     color: #fff;
     font-weight: 700;
     text-decoration: none;
 }
 
 .btn:hover {
-    background: #4c1d95;
+    background: #8a3815;
 }
 
 .btn:focus-visible,
 a:focus-visible {
-    outline: 3px solid #6d28d9;
+    outline: 3px solid #a8461f;
     outline-offset: 3px;
 }
 
 .small {
     font-size: 0.9rem;
-    color: #5b5670;
+    color: #57534e;
     margin-top: 28px;
 }

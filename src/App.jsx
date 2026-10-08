@@ -4,7 +4,6 @@ import About from "./components/About.jsx";
 import Services from "./components/Services.jsx";
 import Projects from "./components/Projects.jsx";
 import Process from "./components/Process.jsx";
-import Tech from "./components/Tech.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import useReveal from "./useReveal.js";
@@ -23,7 +22,6 @@ export default function App() {
         <Services />
         <Projects />
         <Process />
-        <Tech />
         <Contact />
       </main>
       <Footer />
