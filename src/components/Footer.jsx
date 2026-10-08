@@ -20,19 +20,16 @@ export default function Footer() {
       <div className="container">
         <div className="footer__top">
           <div>
-            <p className="brand">
+            <p className="brand brand--light">
               <Logo size={32} />
               <span>
                 {site.name}
-                <small>
-                  {site.role} · {site.specialty}
-                </small>
+                <small>{site.role}</small>
               </span>
             </p>
-            <p>
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </p>
+            <p className="footer__tagline">{site.tagline}</p>
           </div>
+
           <nav aria-label="Liens du pied de page">
             <ul className="footer__links">
               {nav.map((item) => (
@@ -40,32 +37,38 @@ export default function Footer() {
                   <a href={item.href}>{item.label}</a>
                 </li>
               ))}
-              <li>
-                <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
-                  LinkedIn<span className="sr-only"> (nouvel onglet)</span>
-                </a>
-              </li>
-              <li>
-                <a href={site.github} target="_blank" rel="noopener noreferrer">
-                  GitHub<span className="sr-only"> (nouvel onglet)</span>
-                </a>
-              </li>
             </ul>
           </nav>
+
+          <ul className="footer__links footer__links--contact">
+            <li>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </li>
+            <li>
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+                LinkedIn<span className="sr-only"> (nouvel onglet)</span>
+              </a>
+            </li>
+            <li>
+              <a href={site.github} target="_blank" rel="noopener noreferrer">
+                GitHub<span className="sr-only"> (nouvel onglet)</span>
+              </a>
+            </li>
+          </ul>
         </div>
 
         <details id="mentions-legales" className="legal" ref={legalRef}>
           <summary>Mentions légales et confidentialité</summary>
           <h3>Éditrice du site</h3>
           <p>
-            {site.name}, développeuse web junior, étudiante, {site.location}. Contact :{" "}
+            {site.name}, {site.role.toLowerCase()}, étudiante, {site.location}. Contact :{" "}
             <a href={`mailto:${site.email}`}>{site.email}</a>.
           </p>
           <h3>Hébergement</h3>
           <p>{legal.host}</p>
           <h3>Données personnelles</h3>
           <p>
-            Les informations envoyées via le formulaire de contact (nom, email, profil, besoin,
+            Les informations envoyées via le formulaire de contact (nom, email, type de projet,
             budget, délai, message) servent uniquement à répondre à votre demande. Elles sont
             transmises par le service de formulaires de l'hébergeur Netlify, dont les serveurs
             peuvent se situer hors de l'Union européenne, et ne sont ni revendues ni utilisées à
@@ -81,7 +84,7 @@ export default function Footer() {
         </details>
 
         <p className="footer__copy">
-          © {new Date().getFullYear()} {site.name}
+          © {new Date().getFullYear()} {site.name}. Tous droits réservés.
         </p>
       </div>
     </footer>

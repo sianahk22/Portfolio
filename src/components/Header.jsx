@@ -17,9 +17,9 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="header__inner">
+      <div className="header__bar">
         <a href="#accueil" className="brand" onClick={close}>
-          <Logo size={36} />
+          <Logo size={34} />
           <span>
             {site.name}
             <small>{site.role}</small>
@@ -34,7 +34,7 @@ export default function Header() {
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          <span aria-hidden="true">{open ? "✕" : "☰"}</span>
+          <span className="burger__lines" aria-hidden="true" />
         </button>
 
         <nav id="menu" className={`nav ${open ? "is-open" : ""}`} aria-label="Navigation principale">
@@ -48,7 +48,7 @@ export default function Header() {
             ))}
           </ul>
           <Button href="#contact" onClick={close} className="nav__cta">
-            Discuter de mon projet
+            Me contacter
           </Button>
         </nav>
       </div>

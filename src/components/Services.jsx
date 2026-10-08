@@ -1,33 +1,27 @@
 import SectionHeader from "./SectionHeader.jsx";
-import Button from "./Button.jsx";
+import Icon from "./Icon.jsx";
 import { services } from "../data/content.js";
 
 export default function Services() {
   return (
-    <section id="services" className="section">
+    <section id="services" className="section section--panel">
       <div className="container">
         <SectionHeader
           eyebrow="Services"
-          title="Trois façons de vous aider"
+          title="Ce que je peux réaliser pour vous"
           intro="Chaque projet est sur devis, après un premier échange sur votre besoin."
         />
-        <div className="grid grid--3">
+        <ul className="grid grid--4">
           {services.map((s) => (
-            <article className="card service reveal" key={s.title}>
+            <li className="card service reveal" key={s.title}>
+              <span className="icon-tile">
+                <Icon name={s.icon} />
+              </span>
               <h3>{s.title}</h3>
-              <p className="service__for">{s.for}</p>
               <p>{s.text}</p>
-              <ul className="checklist">
-                {s.items.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            </article>
+            </li>
           ))}
-        </div>
-        <p className="center">
-          <Button href="#contact">Demander un devis</Button>
-        </p>
+        </ul>
       </div>
     </section>
   );

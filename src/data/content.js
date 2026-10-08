@@ -3,8 +3,8 @@
 
 export const site = {
   name: "Anaïs Bay",
-  role: "Développeuse web junior",
-  specialty: "Applications web, automatisation & IA",
+  role: "Développeuse web",
+  tagline: "Sites web modernes, responsives et automatisés.",
   email: "bonjour@anaisweb.tech",
   url: "https://anaisweb.tech",
   github: "https://github.com/sianahk22",
@@ -23,131 +23,132 @@ export const site = {
 };
 
 export const nav = [
+  { href: "#accueil", label: "Accueil" },
   { href: "#a-propos", label: "À propos" },
   { href: "#services", label: "Services" },
-  { href: "#competences", label: "Compétences" },
   { href: "#projets", label: "Projets" },
-  { href: "#methode", label: "Méthode" },
   { href: "#contact", label: "Contact" },
 ];
 
 export const hero = {
-  title: "Des outils web simples pour vous faire gagner du temps.",
-  lead:
-    "Je conçois des sites et des applications web, et j'automatise les tâches répétitives, y compris avec l'intelligence artificielle. Mon approche : comprendre votre besoin, proposer une solution simple et vous expliquer clairement ce que je livre.",
-  highlights: ["Sites & applications web", "Automatisation & IA", "Sur devis, à Paris et à distance"],
+  badge: "Développeuse web · Paris",
+  title: "Je crée des expériences web modernes, claires et efficaces.",
+  lead: "Je conçois des sites web responsives et automatisés pour aider les indépendants, les petites entreprises et les porteurs de projets à présenter leur activité en ligne.",
 };
 
-export const audiences = [
-  {
-    title: "Indépendants, petites entreprises, associations",
-    text: "Vous avez besoin d'un site clair, d'un outil sur mesure ou d'automatiser une tâche qui vous prend du temps ? Décrivez-moi votre besoin : je vous dis honnêtement si je peux vous aider, comment, et pour quel budget.",
-    cta: { href: "#contact", label: "Discuter de mon projet" },
-  },
-  {
-    title: "Recruteurs et entreprises",
-    text: "Étudiante en informatique, je suis ouverte aux stages, alternances, CDI, missions freelance et collaborations. Je travaille avec React, JavaScript et Python, et je m'intéresse particulièrement à l'automatisation et à l'IA.",
-    cta: { href: "#contact", label: "Me proposer une opportunité" },
-  },
+// Mini tableau de bord du hero : uniquement des faits vérifiés sur anaisweb.tech.
+export const dashboard = {
+  url: "anaisweb.tech",
+  status: "En ligne",
+  tiles: [
+    { label: "Sécurité", value: "HTTPS actif" },
+    { label: "Formulaire", value: "Connecté" },
+    { label: "Affichage", value: "Responsive" },
+    { label: "Hébergement", value: "Netlify" },
+  ],
+};
+
+// Cartes « dashboard » : intitulés qualitatifs, sans chiffres inventés.
+export const highlights = [
+  { icon: "devices", title: "Design responsive", text: "Mobile, tablette et ordinateur." },
+  { icon: "code", title: "Code propre", text: "Structuré, lisible et facile à faire évoluer." },
+  { icon: "mail", title: "Formulaires connectés", text: "Les demandes arrivent directement par email." },
+  { icon: "rocket", title: "Mise en ligne", text: "Hébergement, nom de domaine et HTTPS." },
 ];
 
 export const about = {
-  text: [
-    "Je suis étudiante en informatique et en software engineering à Paris. J'aime transformer un besoin concret en une solution qui fonctionne : un site lisible, une application utile, ou une automatisation qui supprime une tâche répétitive.",
-    "Je m'intéresse particulièrement à l'automatisation et à l'intégration de l'IA dans des outils du quotidien, avec une règle simple : l'IA aide, mais une personne garde toujours le contrôle sur les décisions importantes.",
+  title: "Je transforme une idée ou une activité en une présence web claire, moderne et accessible.",
+  blocks: [
+    { title: "Qui je suis", text: "Développeuse web à Paris, étudiante en informatique et en software engineering." },
+    { title: "Mon approche", text: "Comprendre votre besoin, proposer une solution simple, puis expliquer clairement ce que je livre." },
+    { title: "Ce qui compte", text: "Des sites rapides, lisibles sur mobile et faciles à faire évoluer." },
+    { title: "Ouverte à", text: "Missions freelance, collaborations, stages, alternances et CDI." },
   ],
-  facts: [
-    { label: "Formation", value: "Étudiante en informatique et software engineering, Paris" },
-    { label: "Ouverte à", value: "Stage, alternance, CDI, missions freelance, collaborations" },
-    { label: "Langues", value: "Français, arabe, anglais" },
-  ],
+  tools: ["HTML", "CSS", "JavaScript", "React", "Python", "Git & GitHub", "Netlify"],
+  languages: "Français, arabe, anglais",
 };
 
 export const services = [
-  {
-    title: "Sites web & landing pages",
-    for: "Indépendants, associations, commerces",
-    text: "Un site clair et adapté aux mobiles pour présenter votre activité et permettre aux visiteurs de vous contacter. Refonte d'un site existant possible.",
-    items: ["Site vitrine ou page unique", "Responsive et accessible", "Formulaire de contact", "Aide à la mise en ligne"],
-  },
-  {
-    title: "Applications web sur mesure",
-    for: "Structures avec un besoin précis",
-    text: "Un outil web pensé pour votre fonctionnement : prise de demandes, petit catalogue, tableau de suivi, espace de gestion simple.",
-    items: ["Analyse du besoin", "Interface simple à utiliser", "Développement avec React", "Explications à la livraison"],
-  },
-  {
-    title: "Automatisation & IA",
-    for: "Toute structure qui perd du temps sur des tâches répétitives",
-    text: "Relier vos outils entre eux et automatiser ce qui peut l'être : formulaires, tableurs, emails. L'IA peut aider à trier ou résumer des demandes, toujours avec une validation humaine.",
-    items: ["Automatisation de tâches répétitives", "Intégration de l'IA dans vos outils", "Validation humaine prévue", "Attention portée à vos données"],
-  },
-];
-
-export const skills = [
-  { group: "Front-end", items: ["HTML", "CSS", "JavaScript", "React", "Responsive design", "Accessibilité web"] },
-  { group: "Back-end & scripts", items: ["Python"] },
-  { group: "Automatisation & IA", items: ["Automatisation de tâches", "Intégration d'IA dans des applications"] },
-  { group: "Outils", items: ["Git", "GitHub", "Vite"] },
+  { icon: "layout", title: "Création de site vitrine", text: "Un site clair pour présenter votre activité et permettre aux visiteurs de vous contacter." },
+  { icon: "user", title: "Portfolio professionnel", text: "Une vitrine soignée pour mettre en valeur votre parcours et vos réalisations." },
+  { icon: "target", title: "Landing page", text: "Une page unique, centrée sur une action : prendre contact, réserver ou s'inscrire." },
+  { icon: "devices", title: "Interface responsive", text: "Un affichage adapté à chaque écran, du téléphone à l'ordinateur." },
+  { icon: "mail", title: "Formulaire de contact", text: "Un formulaire validé, protégé contre le spam et relié à votre boîte email." },
+  { icon: "rocket", title: "Mise en ligne et déploiement", text: "Hébergement, nom de domaine et HTTPS : je m'occupe de la publication." },
+  { icon: "zap", title: "Automatisation simple", text: "Relier vos outils pour gagner du temps. L'IA peut aider, toujours avec une validation humaine." },
+  { icon: "search", title: "Visibilité en ligne", text: "Titres, descriptions, sitemap et Google Search Console, pour être trouvé plus facilement." },
 ];
 
 // Projets réels uniquement. Pour en ajouter un, copier un objet et remplir les champs.
-// `demo` et `code` sont facultatifs : mettre null s'il n'y a pas de lien public.
+// `image`, `demo` et `code` sont facultatifs : mettre null s'il n'y a rien de public.
 export const projects = [
   {
-    title: "Ce portfolio",
+    title: "anaisweb.tech",
     type: "Projet personnel",
-    text: "Site one-page conçu et développé de A à Z : contenu séparé du code, design responsive, accessibilité, référencement et formulaire de contact relié à Netlify Forms avec protection anti-spam.",
+    text: "Conception, développement et mise en ligne de ce portfolio : design responsive, formulaire connecté, référencement et déploiement continu.",
     tech: ["React", "Vite", "CSS", "Netlify Forms"],
-    demo: null,
+    image: {
+      avif: "/images/projet-portfolio.avif",
+      webp: "/images/projet-portfolio.webp",
+      fallback: "/images/projet-portfolio.jpg",
+      width: 1200,
+      height: 750,
+      alt: "Aperçu de la page d'accueil du portfolio anaisweb.tech",
+    },
+    demo: "https://anaisweb.tech",
     code: "https://github.com/sianahk22/Portfolio",
   },
 ];
 
+// Nombre de cartes « Nouveau projet à venir » affichées après les projets réels.
+export const upcomingProjects = 2;
+
 export const steps = [
-  { title: "Premier échange", text: "Vous décrivez votre besoin, vos objectifs et vos contraintes." },
-  { title: "Proposition et devis", text: "Je reformule le besoin et vous envoie un devis détaillé, gratuit et sans engagement." },
-  { title: "Conception et développement", text: "Je construis la solution par étapes et vous montre l'avancement." },
-  { title: "Retours et ajustements", text: "Vous testez une version complète et demandez des corrections." },
-  { title: "Livraison et explications", text: "Je vérifie, je mets en ligne et je vous explique comment l'utiliser." },
+  { title: "Comprendre le besoin", text: "Un premier échange pour cerner vos objectifs, votre public et vos contraintes." },
+  { title: "Concevoir la structure et le design", text: "Je propose l'organisation des pages et une direction visuelle, à valider ensemble." },
+  { title: "Développer et connecter", text: "Je construis le site, le formulaire et les intégrations, en vous montrant l'avancement." },
+  { title: "Mettre en ligne et améliorer", text: "Je publie le site, je vérifie chaque détail, puis je l'ajuste selon vos retours." },
 ];
 
+// Conditions essentielles, en version courte.
 export const conditions = [
-  {
-    title: "Tarifs",
-    text: "Chaque projet est sur devis. Le prix dépend du nombre de pages ou d'écrans, des contenus disponibles (textes, images, logo) et des fonctionnalités demandées.",
-  },
-  {
-    title: "Retouches",
-    text: "Deux séries de retouches sont incluses dans le périmètre validé. Une nouvelle page, une nouvelle fonctionnalité ou un changement complet de direction artistique sont des demandes supplémentaires, toujours annoncées et chiffrées avant d'être réalisées.",
-  },
-  {
-    title: "Délais",
-    text: "Le délai est fixé ensemble dans le devis. Il commence lorsque tous les contenus nécessaires sont reçus ; un retard de validation ou de transmission peut décaler la livraison.",
-  },
-  {
-    title: "Maintenance",
-    text: "Possible ponctuellement ou dans la durée, sur devis : petites modifications, remplacement d'images, vérification du formulaire, corrections. Son contenu est précisé à l'avance.",
-  },
+  "Devis gratuit et sans engagement",
+  "Deux séries de retouches incluses",
+  "Délai fixé ensemble dans le devis",
+  "Maintenance possible, sur devis",
+];
+export const conditionsNote =
+  "Toute demande hors du périmètre validé (nouvelle page, nouvelle fonctionnalité) est annoncée et chiffrée avant d'être réalisée. Le délai démarre à la réception des contenus.";
+
+// Technologies réellement utilisées pour ce site.
+export const technologies = [
+  { name: "HTML", role: "Structure" },
+  { name: "CSS", role: "Design" },
+  { name: "JavaScript", role: "Interactions" },
+  { name: "React", role: "Interface" },
+  { name: "Vite", role: "Build" },
+  { name: "Git", role: "Versions" },
+  { name: "GitHub", role: "Code source" },
+  { name: "Netlify", role: "Hébergement" },
 ];
 
 // Listes du formulaire de contact.
 export const contactOptions = {
-  profiles: ["Indépendant·e", "Entreprise", "Association", "Recruteur / recruteuse", "Particulier", "Autre"],
   needs: [
-    "Site web ou landing page",
-    "Application web sur mesure",
-    "Automatisation & IA",
+    "Site vitrine",
+    "Portfolio",
+    "Landing page",
     "Refonte d'un site existant",
-    "Opportunité : stage, alternance, CDI",
+    "Automatisation",
     "Mission freelance ou collaboration",
+    "Stage, alternance ou CDI",
     "Autre / je ne sais pas encore",
   ],
-  budgets: ["Je ne sais pas encore", "Moins de 500 €", "500 € à 1 500 €", "1 500 € à 3 000 €", "Plus de 3 000 €", "Non concerné (recrutement)"],
+  budgets: ["Je ne sais pas encore", "Moins de 500 €", "500 € à 1 500 €", "1 500 € à 3 000 €", "Plus de 3 000 €", "Non concerné"],
   deadlines: ["Pas de date précise", "Moins d'un mois", "1 à 3 mois", "Plus de 3 mois"],
 };
 
-// Mentions légales : à relire avant la mise en ligne.
+// Mentions légales : à relire avant chaque modification importante.
 export const legal = {
   host: "Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis · netlify.com",
 };

@@ -1,16 +1,16 @@
 import { useRef, useState } from "react";
 import SectionHeader from "./SectionHeader.jsx";
+import Icon from "./Icon.jsx";
 import { site, contactOptions } from "../data/content.js";
 
-// Formulaire envoyé à Netlify Forms (hébergement Netlify uniquement).
+// Formulaire envoyé à Netlify Forms (formulaire « contact »).
 // Netlify détecte le formulaire grâce à sa copie cachée dans index.html :
-// si un champ est ajouté ici, il faut aussi l'ajouter là-bas.
+// si un champ est ajouté ou renommé ici, il faut faire de même là-bas.
 const FORM_NAME = "contact";
 
 const initialValues = {
   nom: "",
   email: "",
-  profil: "",
   besoin: "",
   budget: contactOptions.budgets[0],
   delai: contactOptions.deadlines[0],
@@ -24,15 +24,14 @@ export function validate(v) {
   const errors = {};
   if (v.nom.trim().length < 2) errors.nom = "Indiquez votre nom (au moins 2 caractères).";
   if (!EMAIL_RE.test(v.email.trim())) errors.email = "Indiquez une adresse email valide, par exemple nom@domaine.fr.";
-  if (!v.profil) errors.profil = "Choisissez ce qui vous correspond le mieux.";
-  if (!v.besoin) errors.besoin = "Choisissez le type de besoin.";
+  if (!v.besoin) errors.besoin = "Choisissez le type de projet.";
   const len = v.message.trim().length;
   if (len < 20) errors.message = "Décrivez votre projet en quelques phrases (au moins 20 caractères).";
   else if (len > 3000) errors.message = "Votre message est trop long (3 000 caractères maximum).";
   return errors;
 }
 
-const fieldOrder = ["nom", "email", "profil", "besoin", "message"];
+const fieldOrder = ["nom", "email", "besoin", "message"];
 
 function FieldError({ name, message }) {
   if (!message) return null;
@@ -93,33 +92,46 @@ export default function Contact() {
   });
 
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="section section--panel">
       <div className="container">
         <SectionHeader
           eyebrow="Contact"
           title="Parlons de votre projet"
-          intro="Un projet, une question ou une opportunité ? Remplissez ce formulaire : je vous réponds personnellement, dès que possible."
+          intro="Vous avez une idée ou un projet ? Écrivez-moi et discutons-en."
         />
 
         <div className="contact">
           <aside className="card contact__info">
             <h3>Me contacter directement</h3>
-            <p>
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </p>
-            <p className="muted">{site.location} · projets à distance</p>
-            <p className="contact__links">
-              <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
-                LinkedIn<span className="sr-only"> (nouvel onglet)</span>
-              </a>
-              <a href={site.github} target="_blank" rel="noopener noreferrer">
-                GitHub<span className="sr-only"> (nouvel onglet)</span>
-              </a>
-            </p>
+            <ul className="contact__links">
+              <li>
+                <a href={`mailto:${site.email}`}>
+                  <Icon name="mail" size={18} />
+                  {site.email}
+                </a>
+              </li>
+              <li>
+                <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+                  <Icon name="linkedin" size={18} />
+                  LinkedIn<span className="sr-only"> (nouvel onglet)</span>
+                </a>
+              </li>
+              <li>
+                <a href={site.github} target="_blank" rel="noopener noreferrer">
+                  <Icon name="github" size={18} />
+                  GitHub<span className="sr-only"> (nouvel onglet)</span>
+                </a>
+              </li>
+              <li className="contact__place">
+                <Icon name="pin" size={18} />
+                {site.location} · projets à distance
+              </li>
+            </ul>
+
             <h3>Et ensuite ?</h3>
             <ol className="next-steps">
               <li>Je lis votre demande.</li>
-              <li>Je vous réponds pour en discuter ou vous poser quelques questions.</li>
+              <li>Je vous réponds personnellement pour en discuter.</li>
               <li>Si nous avançons, je vous envoie un devis gratuit et sans engagement.</li>
             </ol>
           </aside>
@@ -142,8 +154,6 @@ export default function Contact() {
               </label>
             </p>
 
-            <p className="muted small">Les champs marqués d'un * sont obligatoires.</p>
-
             <div className="form__row">
               <div className="field">
                 <label htmlFor="f-nom">Nom *</label>
@@ -157,27 +167,15 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="form__row">
-              <div className="field">
-                <label htmlFor="f-profil">Vous êtes *</label>
-                <select {...a11y("profil")} required>
-                  <option value="">Choisir…</option>
-                  {contactOptions.profiles.map((o) => (
-                    <option key={o}>{o}</option>
-                  ))}
-                </select>
-                <FieldError name="profil" message={errors.profil} />
-              </div>
-              <div className="field">
-                <label htmlFor="f-besoin">Votre besoin *</label>
-                <select {...a11y("besoin")} required>
-                  <option value="">Choisir…</option>
-                  {contactOptions.needs.map((o) => (
-                    <option key={o}>{o}</option>
-                  ))}
-                </select>
-                <FieldError name="besoin" message={errors.besoin} />
-              </div>
+            <div className="field">
+              <label htmlFor="f-besoin">Type de projet *</label>
+              <select {...a11y("besoin")} required>
+                <option value="">Choisir…</option>
+                {contactOptions.needs.map((o) => (
+                  <option key={o}>{o}</option>
+                ))}
+              </select>
+              <FieldError name="besoin" message={errors.besoin} />
             </div>
 
             <div className="form__row">
@@ -200,22 +198,23 @@ export default function Contact() {
             </div>
 
             <div className="field">
-              <label htmlFor="f-message">Décrivez votre projet *</label>
-              <span className="field__hint" id="f-message-hint">
-                Votre activité, ce que vous souhaitez obtenir, vos contraintes éventuelles.
-              </span>
-              <textarea {...a11y("message")} rows="6" required maxLength={3000}
-                aria-describedby={errors.message ? "f-message-err f-message-hint" : "f-message-hint"} />
+              <label htmlFor="f-message">Message *</label>
+              <textarea
+                {...a11y("message")}
+                rows="5"
+                required
+                maxLength={3000}
+                placeholder="Votre activité, ce que vous souhaitez obtenir, vos contraintes éventuelles."
+              />
               <FieldError name="message" message={errors.message} />
             </div>
 
-            <p className="muted small">
-              Vos informations servent uniquement à répondre à votre demande. Elles ne sont ni
-              revendues ni utilisées pour de la publicité. Voir les{" "}
-              <a href="#mentions-legales">mentions légales et la confidentialité</a>.
+            <p className="form__privacy">
+              Les champs marqués d'un * sont obligatoires. Vos informations servent uniquement à
+              répondre à votre demande (<a href="#mentions-legales">confidentialité</a>).
             </p>
 
-            <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
+            <button type="submit" className="btn btn--primary btn--block" disabled={status === "sending"}>
               {status === "sending" ? "Envoi en cours…" : "Envoyer ma demande"}
             </button>
 

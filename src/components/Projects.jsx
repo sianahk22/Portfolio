@@ -1,6 +1,7 @@
 import SectionHeader from "./SectionHeader.jsx";
 import Button from "./Button.jsx";
-import { site, projects } from "../data/content.js";
+import Icon from "./Icon.jsx";
+import { projects, upcomingProjects } from "../data/content.js";
 
 export default function Projects() {
   return (
@@ -8,45 +9,71 @@ export default function Projects() {
       <div className="container">
         <SectionHeader
           eyebrow="Projets"
-          title="Ce que j'ai réalisé"
-          intro="Uniquement des projets réels. D'autres réalisations arrivent : vous pouvez suivre mon travail sur GitHub."
+          title="Réalisations"
+          intro="Uniquement des projets réels. De nouvelles réalisations sont en préparation."
         />
-        <div className="grid grid--2">
+        <ul className="grid grid--3">
           {projects.map((p) => (
-            <article className="card project reveal" key={p.title}>
-              <p className="badge">{p.type}</p>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-              <ul className="tags" aria-label="Technologies utilisées">
-                {p.tech.map((t) => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-              <div className="actions actions--small">
-                {p.demo && (
-                  <Button href={p.demo} external>
-                    Voir la démo<span className="sr-only"> de {p.title} (nouvel onglet)</span>
-                  </Button>
-                )}
-                {p.code && (
-                  <Button href={p.code} variant="secondary" external>
-                    Voir le code<span className="sr-only"> de {p.title} (nouvel onglet)</span>
-                  </Button>
+            <li className="card project reveal" key={p.title}>
+              <div className="project__media">
+                {p.image ? (
+                  <picture>
+                    <source type="image/avif" srcSet={p.image.avif} />
+                    <source type="image/webp" srcSet={p.image.webp} />
+                    <img
+                      src={p.image.fallback}
+                      alt={p.image.alt}
+                      width={p.image.width}
+                      height={p.image.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                ) : (
+                  <span className="project__placeholder" aria-hidden="true" />
                 )}
               </div>
-            </article>
+              <div className="project__body">
+                <p className="tag">{p.type}</p>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+                <ul className="chips chips--small" aria-label="Technologies utilisées">
+                  {p.tech.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+                <div className="project__links">
+                  {p.demo && (
+                    <Button href={p.demo} external>
+                      Voir le projet
+                      <Icon name="external" size={16} />
+                      <span className="sr-only"> {p.title} (nouvel onglet)</span>
+                    </Button>
+                  )}
+                  {p.code && (
+                    <Button href={p.code} variant="ghost" external>
+                      Code
+                      <span className="sr-only"> de {p.title} sur GitHub (nouvel onglet)</span>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </li>
           ))}
-          <article className="card project project--cta reveal">
-            <h3>Votre projet pourrait être le prochain</h3>
-            <p>Un site, une application ou une tâche à automatiser ? Parlons-en, sans engagement.</p>
-            <div className="actions actions--small">
-              <Button href="#contact">Discuter de mon projet</Button>
-              <Button href={site.github} variant="ghost" external>
-                Mon GitHub<span className="sr-only"> (nouvel onglet)</span>
-              </Button>
-            </div>
-          </article>
-        </div>
+
+          {Array.from({ length: upcomingProjects }, (_, i) => (
+            <li className="card project project--upcoming reveal" key={`a-venir-${i}`}>
+              <div className="project__media project__media--empty" aria-hidden="true">
+                <Icon name="plus" size={28} />
+              </div>
+              <div className="project__body">
+                <p className="tag tag--muted">En préparation</p>
+                <h3>Nouveau projet à venir</h3>
+                <p>Cet emplacement accueillera une prochaine réalisation.</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

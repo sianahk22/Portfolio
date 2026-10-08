@@ -1,33 +1,40 @@
 import SectionHeader from "./SectionHeader.jsx";
-import { steps, conditions } from "../data/content.js";
+import Icon from "./Icon.jsx";
+import { steps, conditions, conditionsNote } from "../data/content.js";
 
 export default function Process() {
   return (
-    <section id="methode" className="section section--alt">
+    <section id="methode" className="section section--panel">
       <div className="container">
         <SectionHeader
           eyebrow="Méthode"
-          title="Comment se passe un projet"
-          intro="Un déroulé simple et transparent, du premier échange à la livraison. Aucune connaissance technique n'est nécessaire : je vous explique chaque étape avec des mots simples."
+          title="Comment je travaille avec vous"
+          intro="Aucune connaissance technique n'est nécessaire : je vous explique chaque étape avec des mots simples."
         />
         <ol className="steps">
-          {steps.map((s) => (
-            <li key={s.title} className="reveal">
+          {steps.map((s, i) => (
+            <li key={s.title} className="card step reveal">
+              <span className="step__num" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               <h3>{s.title}</h3>
               <p>{s.text}</p>
             </li>
           ))}
         </ol>
 
-        <h3 className="conditions__title">Tarifs, délais et maintenance</h3>
-        <dl className="conditions">
-          {conditions.map((c) => (
-            <div className="card reveal" key={c.title}>
-              <dt>{c.title}</dt>
-              <dd>{c.text}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="card conditions reveal">
+          <h3 className="sr-only">Conditions</h3>
+          <ul className="conditions__list">
+            {conditions.map((c) => (
+              <li key={c}>
+                <Icon name="check" size={18} />
+                {c}
+              </li>
+            ))}
+          </ul>
+          <p className="conditions__note">{conditionsNote}</p>
+        </div>
       </div>
     </section>
   );
