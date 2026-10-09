@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Carte de visite — impression et export PDF
+   Une page par face : 91 × 61 mm = carte 85 × 55 mm + 3 mm de fond perdu
+   de chaque côté (la marge que l'imprimeur coupe). Le contenu reste à au moins
+   4 mm du trait de coupe (zone de sécurité, voir .bc-face__content).
+   La mise en page de la carte elle-même est partagée avec l'écran (card.css,
+   bloc « @media (min-width: 600px), print »).
+   ========================================================================== */
+@media print {
+    @page {
+        size: 91mm 61mm;
+        margin: 0;
+    }
+
+    html,
+    body {
+        width: 91mm;
+        margin: 0;
+        padding: 0;
+        background: #fffdf9;
+    }
+
+    /* Conserver les fonds, dégradés et couleurs à l'impression. */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Aucune animation ni transition sur papier. */
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Tout ce qui n'est pas la carte est masqué. */
+    .skip-link,
+    .bc-top,
+    .bc-intro,
+    .bc-actions,
+    .bc-hint,
+    .bc-about,
+    .bc-facts,
+    .bc-back__cta-btn {
+        display: none !important;
+    }
+
+    .bc-page {
+        display: block;
+        max-width: none;
+        padding: 0;
+    }
+
+    /* La 3D est désactivée : les deux faces s'impriment à plat, l'une après l'autre. */
+    .bc-stage {
+        width: auto;
+        perspective: none;
+    }
+
+    .bc-card,
+    .bc-card > .bc-face,
+    .bc-card > .bc-face--back {
+        transform: none !important;
+    }
+
+    /* Rendu à plat : aucune perspective ni profondeur sur papier. */
+    .bc-card {
+        display: block;
+        transform-style: flat;
+    }
+
+    /* Sécurité si l'impression est lancée pendant l'animation d'entrée (0,6 s). */
+    .bc-stage {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .bc-face {
+        width: 91mm;
+        height: 61mm;
+        padding: 3mm; /* fond perdu : le fond déborde de 3 mm autour de la coupe */
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        backface-visibility: visible;
+        -webkit-backface-visibility: visible;
+        break-after: page;
+        break-inside: avoid;
+    }
+
+    .bc-face:last-child {
+        break-after: auto;
+    }
+
+    .bc-face::after {
+        display: none;
+    }
+
+    /* Taille fixe et rien ne dépasse : un contenu trop long serait coupé
+       plutôt que de créer une page blanche en plus. */
+    .bc-face__trim {
+        flex: none;
+        width: 85mm;
+        height: 55mm;
+        overflow: hidden;
+    }
+
+    /* Le QR code doit toujours être visible, même si l'animation de chargement était en cours. */
+    .bc-qr__img {
+        opacity: 1 !important;
+    }
+
+    .bc-qr__box {
+        box-shadow: 0 0 0 0.2mm #e7e2db;
+    }
+
+    .bc-front__logo {
+        filter: none;
+    }
+
+    /* Les liens deviennent du texte simple sur papier. */
+    .bc-back__contacts a {
+        color: #44403c;
+    }
+}

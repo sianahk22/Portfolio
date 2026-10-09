@@ -9,7 +9,36 @@ export const site = {
   url: "https://anaisweb.tech",
   github: "https://github.com/sianahk22",
   linkedin: "https://www.linkedin.com/in/anais-ben-chabane",
+  instagram: "https://www.instagram.com/anais_bay_tech",
   location: "Paris",
+};
+
+// Carte de visite (page /carte/). Le reste des coordonnées vient de `site`.
+export const card = {
+  fullName: "Anaïs Ben Chabane",
+  title: "Développeuse web moderne",
+  hook: "Des expériences digitales modernes pour des entreprises ambitieuses.",
+  // Version courte, imprimée au verso (la place est comptée sur 85 × 55 mm).
+  intro: "Je conçois des sites et des applications web modernes, et des automatisations qui font gagner du temps.",
+  // Version complète, affichée sous la carte sur la page web.
+  about:
+    "Je conçois des sites web et des applications modernes pour les entreprises. Je développe également des automatisations qui s'appuient sur l'intelligence artificielle pour vous faire gagner du temps. Déterminée, efficace et réactive, je livre des projets soignés dans des délais tenus.",
+  services: [
+    "Sites web modernes et responsives",
+    "Applications web",
+    "Automatisation des tâches avec l'IA",
+    "Accompagnement numérique",
+  ],
+  facts: ["Étudiante en informatique et ingénierie logicielle", "2 ans d'expérience", "Français · Anglais · Arabe"],
+  location: "Paris 13e · Sur site ou à distance",
+  cta: "Parlons de votre prochain projet.",
+  qrLabel: "Scannez pour découvrir mon portfolio",
+  // Téléphone masqué pour le moment (le numéro n'est volontairement pas enregistré dans Git).
+  // Pour l'afficher : remplir phone (ex. "06 00 00 00 00") et phoneHref (ex. "tel:+33600000000"),
+  // puis passer showPhone à true. Il sera alors public, en ligne, sur la carte imprimée et sur GitHub.
+  phone: "",
+  phoneHref: "",
+  showPhone: false,
 };
 
 export const nav = [

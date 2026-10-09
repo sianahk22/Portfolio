@@ -1,0 +1,670 @@
+/* ==========================================================================
+   Carte de visite (page /carte/) — styles écran
+   Les variables, boutons et règles d'accessibilité viennent de ../styles.css.
+
+   Unité de mesure --u :
+   - sur mobile (moins de 600px), --u vaut 5px : la carte devient une « fiche »
+     dont la hauteur s'adapte au contenu, avec un texte confortable à lire ;
+   - à partir de 600px et à l'impression, --u vaut 1cqw, soit 1 % de la largeur
+     de la carte : la carte garde le format 85 × 55 et tout s'agrandit ou rétrécit
+     ensemble. À l'impression, 1cqw = 0,85 mm (85 mm / 100).
+   ========================================================================== */
+
+.bc-body {
+    /* no-repeat : sinon le dégradé se répète sous une page courte. */
+    background: radial-gradient(circle at 50% -10%, rgba(224, 138, 99, 0.16), transparent 55%) no-repeat;
+    background-color: var(--bg);
+}
+
+/* --- En-tête ------------------------------------------------------------ */
+.bc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 16px 0;
+}
+
+.bc-top__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.bc-top__brand:hover {
+    color: var(--accent);
+}
+
+.bc-top__back {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+/* --- Page ----------------------------------------------------------------- */
+.bc-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 8px 16px 64px;
+}
+
+.bc-intro {
+    margin: 24px 0 28px;
+    text-align: center;
+}
+
+.bc-intro__eyebrow {
+    margin: 0 0 6px;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bc-intro__title {
+    margin: 0;
+    font-size: clamp(1.45rem, 4vw, 2.1rem);
+}
+
+/* --- Scène 3D et retournement ------------------------------------------- */
+.bc-stage {
+    width: min(100%, 560px);
+    perspective: 1600px;
+    animation: bc-enter 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.bc-stage:focus {
+    outline: none;
+}
+
+.bc-card {
+    --flip: 0deg;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --lift: 0px;
+    display: grid;
+    transform-style: preserve-3d;
+    transform: translateY(var(--lift)) rotateX(var(--tilt-x)) rotateY(calc(var(--flip) + var(--tilt-y)));
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bc-card.is-flipped {
+    --flip: 180deg;
+}
+
+/* Léger basculement au survol, uniquement avec une souris. */
+@media (hover: hover) {
+    .bc-stage:hover .bc-card {
+        --tilt-x: 3deg;
+        --tilt-y: -4deg;
+        --lift: -4px;
+    }
+}
+
+/* Les deux faces occupent la même case de la grille, dos à dos. */
+.bc-card > .bc-face {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* rotateY(0deg) sur le recto : sans transformation explicite, Firefox ne cache
+   pas son dos et le recto transparaît en miroir quand la carte est retournée. */
+.bc-card > .bc-face--front {
+    transform: rotateY(0deg);
+}
+
+.bc-card > .bc-face--back {
+    transform: rotateY(180deg);
+}
+
+@keyframes bc-enter {
+    from {
+        opacity: 0;
+        transform: translateY(18px) rotateX(10deg);
+    }
+}
+
+/* --- Face (commun recto / verso) ---------------------------------------- */
+.bc-face {
+    --u: 5.4px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid rgba(28, 25, 23, 0.06);
+    background:
+        radial-gradient(circle at 92% 8%, rgba(224, 138, 99, 0.22), transparent 42%),
+        radial-gradient(circle at 0% 100%, rgba(168, 70, 31, 0.07), transparent 50%),
+        #fffdf9;
+    color: var(--text);
+    box-shadow:
+        0 1px 2px rgba(28, 25, 23, 0.06),
+        0 28px 56px -18px rgba(28, 25, 23, 0.22);
+}
+
+/* Trame de points discrète, estompée vers les bords. */
+.bc-face::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(168, 70, 31, 0.16) 1px, transparent 1.3px);
+    background-size: 12px 12px;
+    -webkit-mask-image: radial-gradient(ellipse at 88% 18%, #000, transparent 55%);
+    mask-image: radial-gradient(ellipse at 88% 18%, #000, transparent 55%);
+    pointer-events: none;
+}
+
+/* Reflet lumineux qui apparaît au survol. */
+.bc-face::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+@media (hover: hover) {
+    .bc-stage:hover .bc-face::after {
+        opacity: 0.7;
+    }
+}
+
+.bc-face--back {
+    background:
+        radial-gradient(circle at 0% 100%, rgba(224, 138, 99, 0.18), transparent 45%),
+        radial-gradient(circle at 100% 0%, rgba(168, 70, 31, 0.06), transparent 45%),
+        #fffdf9;
+}
+
+.bc-face--back::before {
+    -webkit-mask-image: radial-gradient(ellipse at 10% 90%, #000, transparent 50%);
+    mask-image: radial-gradient(ellipse at 10% 90%, #000, transparent 50%);
+}
+
+/* Zone de coupe : 85 × 55 mm à l'impression. Les mesures en cqw s'y réfèrent. */
+.bc-face__trim {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    container-type: inline-size;
+}
+
+.bc-face__content {
+    flex: 1 0 auto;
+    padding: calc(var(--u) * 5) calc(var(--u) * 5.5);
+}
+
+.bc-face :focus-visible {
+    outline-width: 2px;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.bc-face .icon {
+    width: calc(var(--u) * 2.8);
+    height: calc(var(--u) * 2.8);
+}
+
+/* --- Recto ---------------------------------------------------------------- */
+.bc-face--front .bc-face__content {
+    display: grid;
+    grid-template-columns: 1fr 44%;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "logo art"
+        "text text"
+        "foot foot";
+    align-content: space-between;
+    column-gap: calc(var(--u) * 3);
+}
+
+.bc-front__logo {
+    grid-area: logo;
+    width: calc(var(--u) * 11);
+    height: calc(var(--u) * 11);
+    filter: drop-shadow(0 6px 10px rgba(138, 56, 21, 0.28));
+}
+
+.bc-front__art {
+    grid-area: art;
+    justify-self: end;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.bc-front__text {
+    grid-area: text;
+    align-self: end;
+}
+
+.bc-front__name {
+    margin: 0 0 calc(var(--u) * 1.4);
+    font-size: calc(var(--u) * 8.4);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.035em;
+}
+
+.bc-front__title {
+    margin: 0 0 calc(var(--u) * 2);
+    color: var(--accent);
+    font-size: calc(var(--u) * 3.6);
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.bc-front__hook {
+    max-width: 34em;
+    margin: 0;
+    color: var(--muted);
+    font-size: calc(var(--u) * 3.1);
+    line-height: 1.4;
+}
+
+.bc-front__foot {
+    grid-area: foot;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--u) * 2) calc(var(--u) * 3);
+    margin-top: calc(var(--u) * 4);
+}
+
+.bc-front__link {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--u) * 1.2);
+    padding: calc(var(--u) * 1.3) calc(var(--u) * 2.8);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--white);
+    font-size: calc(var(--u) * 2.9);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.bc-front__link .icon {
+    transition: transform 0.2s;
+}
+
+.bc-front__link:hover {
+    background: var(--accent);
+    color: var(--white);
+}
+
+.bc-front__link:hover .icon {
+    transform: translateX(3px);
+}
+
+.bc-front__link:active,
+.bc-back__cta-btn:active {
+    transform: scale(0.97);
+}
+
+.bc-front__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--u) * 1);
+    margin: 0;
+    color: var(--muted);
+    font-size: calc(var(--u) * 2.75);
+    line-height: 1.3;
+}
+
+.bc-front__meta .icon {
+    color: var(--accent);
+}
+
+/* Illustration : les plaques flottent doucement, chacune à son rythme. */
+.bc-art__layer,
+.bc-art__spark {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.bc-art__layer {
+    animation: bc-float 6s ease-in-out infinite;
+}
+
+.bc-art__layer--2 {
+    animation-delay: -2s;
+}
+
+.bc-art__layer--3 {
+    animation-delay: -4s;
+}
+
+.bc-art__spark {
+    animation: bc-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes bc-float {
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes bc-pulse {
+    50% {
+        opacity: 0.55;
+        transform: scale(0.85);
+    }
+}
+
+/* --- Verso ---------------------------------------------------------------- */
+.bc-face--back .bc-face__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "main"
+        "side";
+    gap: calc(var(--u) * 5);
+}
+
+.bc-back__main {
+    grid-area: main;
+    min-width: 0;
+}
+
+.bc-back__eyebrow {
+    margin: 0 0 calc(var(--u) * 1.2);
+    color: var(--accent);
+    font-size: calc(var(--u) * 2.5);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+.bc-back__intro {
+    margin: 0 0 calc(var(--u) * 1.8);
+    color: var(--ink);
+    font-size: calc(var(--u) * 2.75);
+    line-height: 1.38;
+}
+
+.bc-back__services,
+.bc-back__contacts {
+    display: grid;
+    font-size: calc(var(--u) * 2.7);
+    line-height: 1.3;
+}
+
+.bc-back__services {
+    margin-bottom: calc(var(--u) * 1.8);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.bc-back__services li,
+.bc-back__contacts a {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 1.2);
+}
+
+.bc-back__services .icon,
+.bc-back__contacts .icon {
+    width: calc(var(--u) * 2.6);
+    height: calc(var(--u) * 2.6);
+    color: var(--accent);
+}
+
+.bc-back__contacts a {
+    color: var(--muted);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.bc-back__contacts a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.bc-back__side {
+    grid-area: side;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--u) * 4);
+}
+
+/* QR code */
+.bc-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--u) * 1.2);
+    width: calc(var(--u) * 23);
+    margin: 0;
+}
+
+.bc-qr__box {
+    display: grid;
+    place-items: center;
+    width: calc(var(--u) * 23);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: calc(var(--u) * 1.6);
+    background: var(--white);
+    box-shadow: 0 0 0 1px var(--line), 0 6px 14px -6px rgba(28, 25, 23, 0.2);
+}
+
+.bc-qr__img {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    transition: opacity 0.3s;
+}
+
+/* Chargement : l'image reste invisible et un fond animé discret la remplace. */
+.bc-qr--loading .bc-qr__img {
+    opacity: 0;
+}
+
+.bc-qr--loading .bc-qr__box {
+    background: linear-gradient(100deg, var(--soft) 30%, var(--white) 50%, var(--soft) 70%);
+    background-size: 200% 100%;
+    animation: bc-shimmer 1.2s linear infinite;
+}
+
+@keyframes bc-shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+.bc-qr__fallback {
+    padding: calc(var(--u) * 1.5);
+    color: var(--ink);
+    font-size: calc(var(--u) * 2.6);
+    font-weight: 700;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.bc-qr__label {
+    color: var(--muted);
+    font-size: calc(var(--u) * 2.5);
+    line-height: 1.3;
+    text-align: center;
+}
+
+/* Appel à l'action */
+.bc-back__cta {
+    flex: 1 1 calc(var(--u) * 23);
+}
+
+.bc-back__cta-text {
+    margin: 0 0 calc(var(--u) * 2);
+    color: var(--ink);
+    font-size: calc(var(--u) * 3);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.bc-back__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--u) * 1.2);
+    padding: calc(var(--u) * 1.2) calc(var(--u) * 2.2);
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--white);
+    font-size: calc(var(--u) * 2.6);
+    white-space: nowrap;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.bc-back__cta-btn:hover {
+    background: var(--accent-dark);
+    color: var(--white);
+}
+
+/* --- Sous la carte -------------------------------------------------------- */
+.bc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: min(100%, 720px);
+    margin-top: 36px;
+}
+
+.bc-actions .btn {
+    flex: 1 1 100%;
+}
+
+.bc-actions .btn:active {
+    transform: scale(0.98);
+}
+
+.bc-hint {
+    max-width: 52ch;
+    margin: 14px auto 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.bc-about {
+    max-width: 62ch;
+    margin: 40px auto 0;
+    color: var(--text);
+    text-align: center;
+}
+
+.bc-facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 720px;
+    margin-top: 20px;
+}
+
+.bc-facts li {
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   Format carte (600px et plus, et impression) : proportions 85 × 55 fixes
+   ========================================================================== */
+@media (min-width: 600px), print {
+    .bc-face {
+        --u: 1cqw;
+    }
+
+    .bc-face__trim {
+        aspect-ratio: 85 / 55;
+    }
+
+    .bc-face--front .bc-face__content {
+        grid-template-columns: 1fr 34%;
+        grid-template-rows: auto 1fr auto;
+        row-gap: calc(var(--u) * 2.5);
+        grid-template-areas:
+            "logo art"
+            "text art"
+            "foot foot";
+    }
+
+    .bc-front__art {
+        align-self: center;
+    }
+
+    .bc-front__foot {
+        margin-top: calc(var(--u) * 1);
+    }
+
+    .bc-face--back .bc-face__content {
+        grid-template-columns: 1fr calc(var(--u) * 26);
+        grid-template-areas: "main side";
+        gap: calc(var(--u) * 4);
+    }
+
+    .bc-back__main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .bc-back__side {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        justify-content: space-between;
+        gap: calc(var(--u) * 2.4);
+    }
+
+    .bc-qr {
+        align-self: center;
+    }
+
+    .bc-back__cta {
+        flex: none;
+    }
+}
+
+@media (min-width: 600px) {
+    .bc-actions .btn {
+        flex: 0 1 auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .bc-stage {
+        width: 640px;
+    }
+
+    .bc-intro {
+        margin: 40px 0 36px;
+    }
+}
