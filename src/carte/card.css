@@ -206,6 +206,10 @@
 
 .bc-face__content {
     flex: 1 0 auto;
+    /* Taille de base proportionnelle : sans elle, les éléments « en ligne » (boutons)
+       héritent des 17px de la page et prennent plus de place sur papier qu'à l'écran. */
+    font-size: calc(var(--u) * 2.7);
+    line-height: 1.3;
     padding: calc(var(--u) * 5) calc(var(--u) * 5.5);
 }
 

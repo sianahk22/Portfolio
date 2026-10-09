@@ -20,7 +20,7 @@ const contacts = [
 
 const newTab = { target: "_blank", rel: "noopener noreferrer" };
 
-// Une face = fond (avec fond perdu à l'impression) + zone de coupe 85 × 55 + contenu.
+// Une face = fond + zone de la carte (85 × 55 à l'impression) + contenu avec marge de sécurité.
 function Face({ side, hidden, labelledBy, children }) {
   return (
     <section

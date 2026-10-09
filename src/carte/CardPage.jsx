@@ -64,7 +64,7 @@ export default function CardPage() {
           </button>
           <button type="button" className="btn btn--primary" onClick={() => window.print()}>
             <Icon name="printer" size={18} />
-            Télécharger la carte au format PDF
+            Télécharger la carte en PDF
           </button>
           <a className="btn btn--secondary" href={mailto}>
             <Icon name="mail" size={18} />
@@ -83,7 +83,7 @@ export default function CardPage() {
         </div>
         <p className="bc-hint" role="status">
           {shareMsg ||
-            "Pour le PDF : dans la fenêtre d'impression, choisissez « Enregistrer au format PDF ». Format 85 × 55 mm, recto-verso, avec 3 mm de fond perdu."}
+            "Dans la fenêtre d'impression : destination « Enregistrer au format PDF », marges « Aucune », échelle 100 %. Résultat : 2 pages de 85 × 55 mm (recto puis verso)."}
         </p>
 
         <p className="bc-about">{card.about}</p>

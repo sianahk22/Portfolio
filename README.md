@@ -80,10 +80,13 @@ Une page à part, construite par Vite à côté du portfolio (voir `vite.config.
 
 - **À l'écran** : carte au format 85 × 55, retournable (bouton « Voir le verso »), effet 3D
   léger, version « fiche » sur mobile. Boutons : e-mail, appel (si activé), partage, PDF.
-- **Impression / PDF** : le bouton « Télécharger la carte au format PDF » ouvre la fenêtre
-  d'impression du navigateur ; choisir « Enregistrer au format PDF ». On obtient 2 pages
-  (recto, verso) de 91 × 61 mm : la carte 85 × 55 mm + 3 mm de fond perdu autour, avec
-  une zone de sécurité d'environ 4 mm. C'est le format attendu par un imprimeur.
+- **Impression / PDF** : le bouton « Télécharger la carte en PDF » ouvre la fenêtre
+  d'impression du navigateur ; choisir « Enregistrer au format PDF », marges « Aucune »,
+  échelle 100 %. On obtient 2 pages (recto, verso) au format exact 85 × 55 mm, sans marge,
+  avec le contenu à plus de 4 mm des bords. Le texte et le QR code restent vectoriels (nets).
+  La disposition est identique à l'écran (vérifié à 0,2 % près dans Chrome et Firefox).
+- **Fond perdu** : le PDF n'en a pas. Si un imprimeur professionnel demande 3 mm de fond
+  perdu, il faudra une variante 91 × 61 mm (à prévoir avant la commande).
 - **Modifier les textes** : objet `card` (et `site` pour les liens) dans `src/data/content.js`.
 - **Téléphone** : masqué, et le numéro n'est pas enregistré dans Git. Pour l'afficher, remplir
   `phone` et `phoneHref` dans `card`, puis passer `showPhone: true` (il devient alors public).

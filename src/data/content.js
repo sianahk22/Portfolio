@@ -15,7 +15,7 @@ export const site = {
 
 // Carte de visite (page /carte/). Le reste des coordonnées vient de `site`.
 export const card = {
-  fullName: "Anaïs Ben Chabane",
+  fullName: "Anaïs BEN CHABANE",
   title: "Développeuse web moderne",
   hook: "Des expériences digitales modernes pour des entreprises ambitieuses.",
   // Version courte, imprimée au verso (la place est comptée sur 85 × 55 mm).
