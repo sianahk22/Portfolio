@@ -78,6 +78,11 @@ scripts/generate-qr.js génère public/images/qr-anaisweb.svg
 
 Une page à part, construite par Vite à côté du portfolio (voir `vite.config.js`).
 
+- **Accès depuis le portfolio** : section « Découvrez ma carte professionnelle » entre
+  « Méthode » et « Contact » (`src/components/CardFeature.jsx`, textes dans `cardPromo`),
+  avec un aperçu 3D décoratif et le bouton « Voir ma carte de visite », plus un lien dans le
+  pied de page.
+
 - **À l'écran** : carte au format 85 × 55, retournable (bouton « Voir le verso »), effet 3D
   léger, version « fiche » sur mobile. Boutons : e-mail, appel (si activé), partage, PDF.
 - **Impression / PDF** : le bouton « Télécharger la carte en PDF » ouvre la fenêtre

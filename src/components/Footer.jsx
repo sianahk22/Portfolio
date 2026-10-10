@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Logo from "./Logo.jsx";
-import { site, nav, legal } from "../data/content.js";
+import { site, nav, legal, cardPromo } from "../data/content.js";
 
 export default function Footer() {
   const legalRef = useRef(null);
@@ -53,6 +53,9 @@ export default function Footer() {
               <a href={site.github} target="_blank" rel="noopener noreferrer">
                 GitHub<span className="sr-only"> (nouvel onglet)</span>
               </a>
+            </li>
+            <li>
+              <a href={cardPromo.href}>Carte professionnelle</a>
             </li>
           </ul>
         </div>

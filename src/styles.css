@@ -770,6 +770,159 @@ img {
 }
 
 /* ==========================================================================
+   Carte professionnelle (section qui mène à /carte/)
+   ========================================================================== */
+.section--tight {
+    padding: 72px 0 0;
+}
+
+.card-feature {
+    display: grid;
+    gap: 36px;
+    align-items: center;
+    padding: 32px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(224, 138, 99, 0.16), transparent 45%),
+        var(--surface);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.card-feature h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.card-feature__intro {
+    max-width: 46ch;
+    margin: 0 0 24px;
+    color: var(--muted);
+}
+
+.card-feature__btn .icon {
+    transition: transform 0.2s;
+}
+
+.card-feature__btn:hover .icon,
+.card-feature__btn:focus-visible .icon {
+    transform: translateX(3px);
+}
+
+.card-feature__btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Aperçu 3D : la scène donne la profondeur, la miniature est inclinée. */
+.card-feature__stage {
+    display: grid;
+    place-items: center;
+    padding: 8px 0 16px;
+    perspective: 900px;
+    container-type: inline-size;
+}
+
+/* --m = 1 % de la largeur de la miniature (même principe que --u sur la carte). */
+.card-feature__mini {
+    --m: 3.2px;
+    --m: calc(min(100cqw, 380px) / 100);
+    position: relative;
+    width: min(100%, 380px);
+    aspect-ratio: 85 / 55;
+    overflow: hidden;
+    border: 1px solid rgba(28, 25, 23, 0.06);
+    border-radius: calc(var(--m) * 4.5);
+    background:
+        radial-gradient(circle at 92% 8%, rgba(224, 138, 99, 0.22), transparent 42%),
+        radial-gradient(circle at 0% 100%, rgba(168, 70, 31, 0.07), transparent 50%),
+        #fffdf9;
+    box-shadow:
+        0 1px 2px rgba(28, 25, 23, 0.06),
+        0 calc(var(--m) * 6) calc(var(--m) * 12) rgba(28, 25, 23, 0.16);
+    transform: rotateX(10deg) rotateY(-16deg) rotateZ(2deg);
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s;
+}
+
+/* Reflet lumineux qui glisse au survol. */
+.card-feature__mini::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    transition: background-position 0.8s ease;
+    pointer-events: none;
+}
+
+.card-feature:hover .card-feature__mini,
+.card-feature:focus-within .card-feature__mini {
+    transform: rotateX(4deg) rotateY(-6deg) translateY(-4px);
+    box-shadow:
+        0 1px 2px rgba(28, 25, 23, 0.06),
+        0 calc(var(--m) * 9) calc(var(--m) * 16) rgba(28, 25, 23, 0.2);
+}
+
+.card-feature:hover .card-feature__mini::after,
+.card-feature:focus-within .card-feature__mini::after {
+    background-position: 0 0;
+}
+
+.card-feature__logo {
+    position: absolute;
+    left: calc(var(--m) * 6);
+    top: calc(var(--m) * 6);
+    width: calc(var(--m) * 11);
+    height: calc(var(--m) * 11);
+}
+
+.card-feature__art {
+    position: absolute;
+    right: calc(var(--m) * 3);
+    top: calc(var(--m) * 3);
+    width: calc(var(--m) * 36);
+    height: auto;
+}
+
+.card-feature__mini p {
+    position: absolute;
+    left: calc(var(--m) * 6);
+    margin: 0;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+.card-feature__name {
+    bottom: calc(var(--m) * 20);
+    color: var(--ink);
+    font-size: calc(var(--m) * 7);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.card-feature__title {
+    bottom: calc(var(--m) * 14.5);
+    color: var(--accent);
+    font-size: calc(var(--m) * 3.6);
+    font-weight: 700;
+}
+
+.card-feature__url {
+    bottom: calc(var(--m) * 6);
+    color: var(--muted);
+    font-size: calc(var(--m) * 3);
+    font-weight: 600;
+}
+
+/* Moins d'animations demandées : la miniature reste immobile. */
+@media (prefers-reduced-motion: reduce) {
+    .card-feature:hover .card-feature__mini,
+    .card-feature:focus-within .card-feature__mini {
+        transform: rotateX(10deg) rotateY(-16deg) rotateZ(2deg);
+    }
+}
+
+/* ==========================================================================
    Contact
    ========================================================================== */
 .contact {
@@ -1029,6 +1182,10 @@ img {
    Tablette (600px et plus)
    ========================================================================== */
 @media (min-width: 600px) {
+    .card-feature {
+        padding: 40px;
+    }
+
     .services,
     .steps,
     .form__row {
@@ -1046,6 +1203,16 @@ img {
 @media (min-width: 960px) {
     .section {
         padding: 120px 0;
+    }
+
+    .section--tight {
+        padding: 96px 0 0;
+    }
+
+    .card-feature {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        padding: 56px;
     }
 
     .hero {

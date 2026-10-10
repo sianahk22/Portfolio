@@ -41,6 +41,15 @@ export const card = {
   showPhone: false,
 };
 
+// Section du portfolio (entre Méthode et Contact) qui mène à la carte de visite.
+export const cardPromo = {
+  eyebrow: "Carte de visite",
+  title: "Découvrez ma carte professionnelle",
+  text: "Retrouvez mes coordonnées, mes services et mes liens professionnels dans ma carte de visite digitale.",
+  cta: "Voir ma carte de visite",
+  href: "/carte/",
+};
+
 export const nav = [
   { href: "#accueil", label: "Accueil" },
   { href: "#a-propos", label: "À propos" },
