@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Carte de visite — impression et export PDF
+   Une page par face, au format européen exact : 85 × 55 mm, paysage, sans marge.
+   Page 1 = recto, page 2 = verso.
+
+   La disposition est la même qu'à l'écran (card.css, bloc
+   « @media (min-width: 600px), print ») ; seule l'unité change :
+   à l'écran --u vaut 1cqw (1 % de la largeur de la carte), ici --u vaut
+   0,85 mm (1 % de 85 mm). Valeur fixe en millimètres : le rendu papier ne dépend
+   ni de la taille de la fenêtre, ni du calcul des conteneurs par le navigateur.
+
+   Zone sûre : le contenu reste à au moins 4 mm des bords
+   (.bc-face__content : 5u = 4,25 mm en haut et en bas, 5,5u = 4,7 mm sur les côtés).
+   ========================================================================== */
+@media print {
+    @page {
+        size: 85mm 55mm;
+        margin: 0;
+    }
+
+    html,
+    body {
+        width: 85mm;
+        margin: 0;
+        padding: 0;
+        background: #fffdf9;
+        overflow: visible;
+    }
+
+    /* Conserver les fonds, dégradés et couleurs à l'impression. */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Aucune animation ni transition sur papier. */
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Tout ce qui n'est pas la carte est masqué (boutons, textes d'écran). */
+    .skip-link,
+    .bc-top,
+    .bc-intro,
+    .bc-actions,
+    .bc-hint,
+    .bc-about,
+    .bc-facts {
+        display: none !important;
+    }
+
+    /* Le bouton du verso est invisible mais garde sa place :
+       la phrase d'appel reste exactement au même endroit qu'à l'écran. */
+    .bc-back__cta-btn {
+        visibility: hidden;
+    }
+
+    .bc-page {
+        display: block;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* La 3D est désactivée : les deux faces s'impriment à plat, l'une après l'autre. */
+    .bc-stage {
+        width: auto;
+        margin: 0;
+        perspective: none;
+        opacity: 1 !important; /* sécurité si l'impression part pendant l'animation d'entrée */
+        transform: none !important;
+    }
+
+    .bc-card {
+        display: block;
+        transform-style: flat;
+    }
+
+    .bc-card,
+    .bc-card > .bc-face,
+    .bc-card > .bc-face--front,
+    .bc-card > .bc-face--back {
+        transform: none !important;
+    }
+
+    /* Une face = une page de 85 × 55 mm, ni bordure, ni ombre, ni arrondi. */
+    .bc-face {
+        --u: 0.85mm;
+        width: 85mm;
+        height: 55mm;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        backface-visibility: visible;
+        -webkit-backface-visibility: visible;
+        break-after: page;
+        break-inside: avoid;
+    }
+
+    .bc-face:last-child {
+        break-after: auto;
+    }
+
+    /* Le reflet de survol n'a pas de sens sur papier. */
+    .bc-face::after {
+        display: none;
+    }
+
+    /* Taille fixe et rien ne dépasse : un contenu trop long serait coupé
+       plutôt que de créer une page blanche en plus. */
+    .bc-face__trim {
+        flex: none;
+        width: 85mm;
+        height: 55mm;
+        overflow: hidden;
+        container-type: normal;
+    }
+
+    /* Le QR code doit toujours être visible, même si son chargement était en cours. */
+    .bc-qr__img {
+        opacity: 1 !important;
+    }
+
+    .bc-qr__box {
+        box-shadow: 0 0 0 0.2mm #e7e2db;
+    }
+
+    .bc-front__logo {
+        filter: none;
+    }
+
+    /* Les liens deviennent du texte simple sur papier. */
+    .bc-back__contacts a {
+        color: #44403c;
+    }
+}

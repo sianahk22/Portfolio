@@ -67,6 +67,23 @@ const paths = {
     </>
   ),
   plus: <path d="M12 5v14M5 12h14" />,
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M17.3 6.7v.1" />
+    </>
+  ),
+  phone: (
+    <path d="M5 4h3.5l1.8 4.5-2.3 1.4a11 11 0 006.1 6.1l1.4-2.3L20 15.5V19a1 1 0 01-1 1A16 16 0 014 5a1 1 0 011-1z" />
+  ),
+  printer: (
+    <>
+      <path d="M7 9V3h10v6M7 17H5a2 2 0 01-2-2v-4a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2h-2" />
+      <rect x="7" y="14" width="10" height="7" rx="1" />
+    </>
+  ),
+  rotate: <path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7" />,
 };
 
 export default function Icon({ name, size = 22, className = "" }) {
