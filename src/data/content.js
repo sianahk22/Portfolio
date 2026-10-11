@@ -112,7 +112,6 @@ export const projects = [
     title: "anaisweb.tech",
     type: "Conception et développement",
     text: "Mon site professionnel, conçu de A à Z : design responsive, formulaire de contact connecté, référencement et déploiement continu sur Netlify.",
-    tech: ["React", "Vite", "CSS", "Netlify Forms"],
     image: {
       avif: "/images/projet-portfolio.avif",
       webp: "/images/projet-portfolio.webp",
@@ -122,15 +121,14 @@ export const projects = [
       alt: "Aperçu de la page d'accueil du site anaisweb.tech",
     },
     demo: "https://anaisweb.tech",
-    code: "https://github.com/sianahk22/Portfolio",
   },
   {
     // Projet personnel : marque, produits et données fictifs (le dire clairement aux visiteurs).
-    // Pas de démo en ligne pour le moment : ajouter `demo` une fois le site déployé sur Vercel.
+    // Pas de démo en ligne pour le moment : la carte affiche « Démo en ligne bientôt disponible ».
+    // Ajouter `demo: "https://…"` une fois le site déployé : la carte deviendra cliquable.
     title: "Maison Aria",
     type: "Projet personnel · marque fictive",
     text: "Application web de démonstration pour une marque fictive de décoration : boutique filtrable, panier, réservation de consultations sans double réservation, assistant de recommandation et tableau de bord.",
-    tech: ["React", "Vite", "Tailwind CSS", "Vercel"],
     image: {
       avif: "/images/projet-maison-aria.avif",
       webp: "/images/projet-maison-aria.webp",
@@ -139,7 +137,6 @@ export const projects = [
       height: 750,
       alt: "Aperçu de la page d'accueil de Maison Aria : titre « Des intérieurs pensés pour durer » et photo d'un salon",
     },
-    code: "https://github.com/sianahk22/maison-aria",
   },
 ];
 export const projectsNote = "D'autres réalisations sont en cours et seront présentées ici prochainement.";
