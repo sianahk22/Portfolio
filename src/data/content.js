@@ -124,6 +124,23 @@ export const projects = [
     demo: "https://anaisweb.tech",
     code: "https://github.com/sianahk22/Portfolio",
   },
+  {
+    // Projet personnel : marque, produits et données fictifs (le dire clairement aux visiteurs).
+    // Pas de démo en ligne pour le moment : ajouter `demo` une fois le site déployé sur Vercel.
+    title: "Maison Aria",
+    type: "Projet personnel · marque fictive",
+    text: "Application web de démonstration pour une marque fictive de décoration : boutique filtrable, panier, réservation de consultations sans double réservation, assistant de recommandation et tableau de bord.",
+    tech: ["React", "Vite", "Tailwind CSS", "Vercel"],
+    image: {
+      avif: "/images/projet-maison-aria.avif",
+      webp: "/images/projet-maison-aria.webp",
+      fallback: "/images/projet-maison-aria.jpg",
+      width: 1200,
+      height: 750,
+      alt: "Aperçu de la page d'accueil de Maison Aria : titre « Des intérieurs pensés pour durer » et photo d'un salon",
+    },
+    code: "https://github.com/sianahk22/maison-aria",
+  },
 ];
 export const projectsNote = "D'autres réalisations sont en cours et seront présentées ici prochainement.";
 
