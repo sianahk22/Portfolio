@@ -652,27 +652,49 @@ img {
     box-shadow: var(--shadow);
 }
 
+/* Maquette : la capture entière, posée dans un cadre de navigateur sur un fond doux. */
 .project__media {
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--soft);
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at 15% 0%, var(--accent-soft), transparent 60%),
+        var(--soft);
     border-bottom: 1px solid var(--line);
 }
 
-.project__media picture,
-.project__media img {
+.project__frame {
     width: 100%;
-    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.05), 0 16px 40px rgba(28, 25, 23, 0.12);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.project__media img {
+/* Barre de fenêtre avec trois points (décorative). */
+.project__bar {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--line);
+    background: #f6f2ec;
+}
+
+.project__bar i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d6cec4;
+}
+
+.project__frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
     object-fit: cover;
-    object-position: top left;
-    transition: transform 0.4s ease;
-}
-
-.project:hover .project__media img {
-    transform: scale(1.02);
 }
 
 .project__body {
@@ -695,15 +717,53 @@ img {
     font-size: 1.5rem;
 }
 
-.project__body .chips {
-    margin-top: 8px;
+.project__cta,
+.project__soon {
+    margin-top: 20px;
 }
 
-.project__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 28px;
+/* Toute la carte est cliquable : le ::after du lien recouvre la carte entière. */
+.project--link {
+    position: relative;
+}
+
+.project__cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+}
+
+.project--link:hover .project__frame {
+    transform: translateY(-4px);
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.05), 0 22px 48px rgba(28, 25, 23, 0.16);
+}
+
+.project--link:hover .project__cta {
+    background: var(--accent);
+}
+
+/* Pas de transform sur ce bouton (ni au survol, ni au clic) : un élément transformé
+   devient le repère de son ::after, qui ne couvrirait plus que le bouton. */
+.project__cta,
+.project__cta:hover,
+.project__cta:active {
+    transform: none;
+}
+
+.project__cta:active {
+    background: var(--accent-dark);
+}
+
+/* Projet sans démo en ligne : simple mention, pas de lien. */
+.project__soon {
+    display: inline-flex;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--soft);
+    color: var(--muted) !important;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .projects__note {
@@ -1239,8 +1299,7 @@ img {
     }
 
     .project__media {
-        aspect-ratio: auto;
-        min-height: 100%;
+        padding: 36px;
         border-bottom: 0;
         border-right: 1px solid var(--line);
     }
