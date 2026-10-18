@@ -1,7 +1,7 @@
 import Button from "./Button.jsx";
 import Icon from "./Icon.jsx";
 import CardLogo from "../carte/CardLogo.jsx";
-import TechArt from "../carte/TechArt.jsx";
+import DeskArt from "../carte/DeskArt.jsx";
 import { site, card, cardPromo } from "../data/content.js";
 
 // Section qui présente la carte de visite et mène à /carte/.
@@ -24,11 +24,13 @@ export default function CardFeature() {
 
           <div className="card-feature__stage" aria-hidden="true">
             <div className="card-feature__mini">
-              <CardLogo className="card-feature__logo" />
-              <TechArt className="card-feature__art" />
-              <p className="card-feature__name">{site.name}</p>
-              <p className="card-feature__title">{card.title}</p>
-              <p className="card-feature__url">{site.url.replace(/^https?:\/\//, "")}</p>
+              <DeskArt className="card-feature__desk" screen="/images/projet-portfolio.webp" variant="night" />
+              <div className="card-feature__panel">
+                <CardLogo className="card-feature__logo" />
+                <p className="card-feature__name">{site.name}</p>
+                <p className="card-feature__title">{card.title}</p>
+                <p className="card-feature__url">{site.url.replace(/^https?:\/\//, "")}</p>
+              </div>
             </div>
           </div>
         </div>

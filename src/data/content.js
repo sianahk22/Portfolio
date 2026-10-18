@@ -19,7 +19,6 @@ export const card = {
   title: "Développeuse web moderne",
   hook: "Des expériences digitales modernes pour des entreprises ambitieuses.",
   // Version courte, imprimée au verso (la place est comptée sur 85 × 55 mm).
-  intro: "Je conçois des sites et des applications web modernes, et des automatisations qui font gagner du temps.",
   // Version complète, affichée sous la carte sur la page web.
   about:
     "Je conçois des sites web et des applications modernes pour les entreprises. Je développe également des automatisations qui s'appuient sur l'intelligence artificielle pour vous faire gagner du temps. Déterminée, efficace et réactive, je livre des projets soignés dans des délais tenus.",
@@ -62,25 +61,13 @@ export const hero = {
   badge: "Développeuse web · Paris",
   title: "Des sites web modernes, pensés pour votre activité.",
   lead: "Je conçois et développe des sites responsives et automatisés pour les indépendants, les petites entreprises et les porteurs de projets : clairs, rapides et faciles à faire évoluer.",
-  // Photo d'ambiance libre de droits (CC0, domaine public) : « White cup and MacBook »,
-  // Alex Knight (Unsplash), via Wikimedia Commons. Mention de l'auteur non obligatoire.
-  photo: {
-    avif: "/images/espace-travail-800.avif 800w, /images/espace-travail-1400.avif 1400w",
-    webp: "/images/espace-travail-800.webp 800w, /images/espace-travail-1400.webp 1400w",
-    fallback: "/images/espace-travail-1200.jpg",
-    width: 1200,
-    height: 747,
-    alt: "Ordinateur portable et tasse de café sur une table en bois, dans un café lumineux",
-  },
 };
 
-// Tuiles du hero : uniquement des faits vérifiés sur anaisweb.tech.
+// Pastille flottante de l'accueil : uniquement un fait vérifié sur anaisweb.tech.
 export const status = {
   url: "anaisweb.tech",
   label: "En ligne",
-  checks: ["HTTPS actif", "Formulaire connecté", "Responsive"],
 };
-export const stack = ["React", "Vite", "Netlify"];
 
 export const services = [
   {
@@ -124,8 +111,6 @@ export const projects = [
   },
   {
     // Projet personnel : marque, produits et données fictifs (le dire clairement aux visiteurs).
-    // Pas de démo en ligne pour le moment : la carte affiche « Démo en ligne bientôt disponible ».
-    // Ajouter `demo: "https://…"` une fois le site déployé : la carte deviendra cliquable.
     title: "Maison Aria",
     type: "Projet personnel · marque fictive",
     text: "Application web de démonstration pour une marque fictive de décoration : boutique filtrable, panier, réservation de consultations sans double réservation, assistant de recommandation et tableau de bord.",
@@ -137,37 +122,28 @@ export const projects = [
       height: 750,
       alt: "Aperçu de la page d'accueil de Maison Aria : titre « Des intérieurs pensés pour durer » et photo d'un salon",
     },
+    demo: "https://maison-aria.vercel.app",
+    // Légende affichée sous l'ordinateur de l'accueil quand son écran montre ce projet.
+    heroCaption: "Boutique e-commerce Maison Aria",
   },
 ];
 export const projectsNote = "D'autres réalisations sont en cours et seront présentées ici prochainement.";
 
 export const about = {
-  title: "Je transforme une idée ou une activité en une présence web claire, moderne et accessible.",
-  text: "Basée à Paris, je travaille avec des indépendants, des petites structures et des porteurs de projets. Mon approche est simple : comprendre votre besoin, proposer une solution adaptée, puis vous expliquer clairement ce que je livre.",
+  title: "Salut, moi c'est Anaïs, une développeuse web créative.",
+  // Les passages entre ** ** sont affichés en gras (voir About.jsx).
+  text: "Étudiante en génie logiciel issue de l'École Supérieure d'Informatique et poursuivant mon parcours à Paris, je me passionne pour le web moderne. J'enrichis chaque projet en combinant **rigueur technique**, **créativité** et **sens du détail**.",
   facts: [
-    { label: "Formation", value: "Informatique et software engineering" },
     { label: "Langues", value: "Français, arabe, anglais" },
     { label: "Ouverte à", value: "Missions, collaborations et postes en entreprise" },
   ],
   tools: ["HTML", "CSS", "JavaScript", "React", "Vite", "Python", "Git & GitHub", "Netlify"],
 };
 
-export const steps = [
-  { title: "Comprendre", text: "Vos objectifs, votre public et vos contraintes." },
-  { title: "Concevoir", text: "La structure des pages et la direction visuelle." },
-  { title: "Développer", text: "Le site, le formulaire et les intégrations." },
-  { title: "Mettre en ligne", text: "La publication, les vérifications, puis les ajustements." },
-];
 
 // Conditions essentielles, en version courte.
-export const conditions = [
-  "Devis gratuit et sans engagement",
-  "Deux séries de retouches incluses",
-  "Délai fixé ensemble dans le devis",
-  "Maintenance possible, sur devis",
-];
-export const conditionsNote =
-  "Toute demande hors du périmètre validé est annoncée et chiffrée avant d'être réalisée. Le délai démarre à la réception des contenus.";
+
+
 
 // Listes du formulaire de contact.
 export const contactOptions = {

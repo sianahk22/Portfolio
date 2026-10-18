@@ -143,26 +143,11 @@
     overflow: hidden;
     border-radius: 18px;
     border: 1px solid rgba(28, 25, 23, 0.06);
-    background:
-        radial-gradient(circle at 92% 8%, rgba(224, 138, 99, 0.22), transparent 42%),
-        radial-gradient(circle at 0% 100%, rgba(168, 70, 31, 0.07), transparent 50%),
-        #fffdf9;
+    background: #fffdf9; /* recouvert par le panneau et la scène de chaque face */
     color: var(--text);
     box-shadow:
         0 1px 2px rgba(28, 25, 23, 0.06),
         0 28px 56px -18px rgba(28, 25, 23, 0.22);
-}
-
-/* Trame de points discrète, estompée vers les bords. */
-.bc-face::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(168, 70, 31, 0.16) 1px, transparent 1.3px);
-    background-size: 12px 12px;
-    -webkit-mask-image: radial-gradient(ellipse at 88% 18%, #000, transparent 55%);
-    mask-image: radial-gradient(ellipse at 88% 18%, #000, transparent 55%);
-    pointer-events: none;
 }
 
 /* Reflet lumineux qui apparaît au survol. */
@@ -180,18 +165,6 @@
     .bc-stage:hover .bc-face::after {
         opacity: 0.7;
     }
-}
-
-.bc-face--back {
-    background:
-        radial-gradient(circle at 0% 100%, rgba(224, 138, 99, 0.18), transparent 45%),
-        radial-gradient(circle at 100% 0%, rgba(168, 70, 31, 0.06), transparent 45%),
-        #fffdf9;
-}
-
-.bc-face--back::before {
-    -webkit-mask-image: radial-gradient(ellipse at 10% 90%, #000, transparent 50%);
-    mask-image: radial-gradient(ellipse at 10% 90%, #000, transparent 50%);
 }
 
 /* Zone de coupe : 85 × 55 mm à l'impression. Les mesures en cqw s'y réfèrent. */
@@ -224,85 +197,114 @@
     height: calc(var(--u) * 2.8);
 }
 
-/* --- Recto ---------------------------------------------------------------- */
+/* --- Recto ----------------------------------------------------------------
+   Miroir du verso, inspiré d'un écran de connexion « premium » : à gauche la scène
+   de bureau le soir, à droite un panneau sombre au liseré doré. */
+.bc-face--front {
+    border-color: rgba(233, 180, 138, 0.25);
+    background: #1c1715;
+}
+
 .bc-face--front .bc-face__content {
     display: grid;
-    grid-template-columns: 1fr 44%;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-        "logo art"
-        "text text"
-        "foot foot";
-    align-content: space-between;
-    column-gap: calc(var(--u) * 3);
+    grid-template-columns: 1fr;
+    padding: 0;
+}
+
+.bc-front__visual {
+    position: relative;
+    min-height: calc(var(--u) * 52);
+    overflow: hidden;
+    background: #1e1815;
+}
+
+.bc-front__desk {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.bc-front__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: calc(var(--u) * 2.2);
+    min-width: 0;
+    padding: calc(var(--u) * 5);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(217, 164, 111, 0.2), transparent 45%),
+        radial-gradient(circle at 0% 100%, rgba(168, 70, 31, 0.28), transparent 55%),
+        #1c1715;
+    color: #f5ede6;
+}
+
+/* Liseré doré lumineux entre la photo et le panneau (en haut sur mobile, à gauche sinon). */
+.bc-front__panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e9b48a, transparent);
+    box-shadow: 0 0 calc(var(--u) * 2) rgba(233, 180, 138, 0.6);
 }
 
 .bc-front__logo {
-    grid-area: logo;
-    width: calc(var(--u) * 11);
-    height: calc(var(--u) * 11);
-    filter: drop-shadow(0 6px 10px rgba(138, 56, 21, 0.28));
-}
-
-.bc-front__art {
-    grid-area: art;
-    justify-self: end;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-.bc-front__text {
-    grid-area: text;
-    align-self: end;
+    flex: none;
+    width: calc(var(--u) * 8.5);
+    height: calc(var(--u) * 8.5);
+    filter: drop-shadow(0 4px 10px rgba(217, 164, 111, 0.35));
 }
 
 .bc-front__name {
-    margin: 0 0 calc(var(--u) * 1.4);
-    font-size: calc(var(--u) * 8.4);
+    margin: 0 0 calc(var(--u) * 1.2);
+    color: var(--white);
+    font-size: calc(var(--u) * 7.6);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.035em;
 }
 
 .bc-front__title {
-    margin: 0 0 calc(var(--u) * 2);
-    color: var(--accent);
-    font-size: calc(var(--u) * 3.6);
+    margin: 0 0 calc(var(--u) * 1.6);
+    color: #e9b48a;
+    font-size: calc(var(--u) * 3.3);
     font-weight: 700;
     line-height: 1.25;
 }
 
 .bc-front__hook {
-    max-width: 34em;
     margin: 0;
-    color: var(--muted);
-    font-size: calc(var(--u) * 3.1);
+    color: #cdbfb3;
+    font-size: calc(var(--u) * 2.75);
     line-height: 1.4;
 }
 
 .bc-front__foot {
-    grid-area: foot;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: calc(var(--u) * 2) calc(var(--u) * 3);
-    margin-top: calc(var(--u) * 4);
+    gap: calc(var(--u) * 1.4) calc(var(--u) * 3);
 }
 
+/* Bouton doré, comme le bouton principal de l'écran de connexion */
 .bc-front__link {
     display: inline-flex;
     align-items: center;
     gap: calc(var(--u) * 1.2);
-    padding: calc(var(--u) * 1.3) calc(var(--u) * 2.8);
+    padding: calc(var(--u) * 1.2) calc(var(--u) * 2.6);
     border-radius: 999px;
-    background: var(--ink);
-    color: var(--white);
-    font-size: calc(var(--u) * 2.9);
+    background: linear-gradient(135deg, #efc29b, #c98a5a);
+    color: #1c1715;
+    font-size: calc(var(--u) * 2.8);
     font-weight: 700;
     line-height: 1.2;
     text-decoration: none;
-    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 0 calc(var(--u) * 3) rgba(233, 180, 138, 0.3);
+    transition: filter 0.2s, transform 0.2s;
 }
 
 .bc-front__link .icon {
@@ -310,16 +312,15 @@
 }
 
 .bc-front__link:hover {
-    background: var(--accent);
-    color: var(--white);
+    color: #1c1715;
+    filter: brightness(1.08);
 }
 
 .bc-front__link:hover .icon {
     transform: translateX(3px);
 }
 
-.bc-front__link:active,
-.bc-back__cta-btn:active {
+.bc-front__link:active {
     transform: scale(0.97);
 }
 
@@ -328,93 +329,63 @@
     align-items: center;
     gap: calc(var(--u) * 1);
     margin: 0;
-    color: var(--muted);
-    font-size: calc(var(--u) * 2.75);
+    color: #b9aa9d;
+    font-size: calc(var(--u) * 2.5);
     line-height: 1.3;
 }
 
 .bc-front__meta .icon {
-    color: var(--accent);
+    color: #e9b48a;
 }
 
-/* Illustration : les plaques flottent doucement, chacune à son rythme. */
-.bc-art__layer,
-.bc-art__spark {
-    transform-box: fill-box;
-    transform-origin: center;
+.bc-front__panel :focus-visible {
+    outline-color: #efc29b;
 }
 
-.bc-art__layer {
-    animation: bc-float 6s ease-in-out infinite;
+/* --- Verso ----------------------------------------------------------------
+   À gauche, un panneau coloré (nom, services, coordonnées, réseaux, QR code) ;
+   à droite, la scène de bureau dessinée avec l'appel à l'action posé sur le bureau. */
+.bc-face--back {
+    background: #8a3815;
 }
 
-.bc-art__layer--2 {
-    animation-delay: -2s;
-}
-
-.bc-art__layer--3 {
-    animation-delay: -4s;
-}
-
-.bc-art__spark {
-    animation: bc-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes bc-float {
-    50% {
-        transform: translateY(-4px);
-    }
-}
-
-@keyframes bc-pulse {
-    50% {
-        opacity: 0.55;
-        transform: scale(0.85);
-    }
-}
-
-/* --- Verso ---------------------------------------------------------------- */
 .bc-face--back .bc-face__content {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-areas:
-        "main"
-        "side";
-    gap: calc(var(--u) * 5);
+    padding: 0;
 }
 
-.bc-back__main {
-    grid-area: main;
+.bc-back__info {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 1.8);
     min-width: 0;
+    padding: calc(var(--u) * 5) calc(var(--u) * 5);
+    background:
+        radial-gradient(circle at 0% 0%, rgba(244, 165, 130, 0.25), transparent 50%),
+        linear-gradient(160deg, #a8461f, #8a3815);
+    color: var(--white);
 }
 
 .bc-back__eyebrow {
-    margin: 0 0 calc(var(--u) * 1.2);
-    color: var(--accent);
-    font-size: calc(var(--u) * 2.5);
+    margin: 0;
+    color: #fde3d3;
+    font-size: calc(var(--u) * 2.4);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     line-height: 1.3;
     text-transform: uppercase;
-}
-
-.bc-back__intro {
-    margin: 0 0 calc(var(--u) * 1.8);
-    color: var(--ink);
-    font-size: calc(var(--u) * 2.75);
-    line-height: 1.38;
 }
 
 .bc-back__services,
 .bc-back__contacts {
     display: grid;
-    font-size: calc(var(--u) * 2.7);
+    gap: calc(var(--u) * 0.5);
+    font-size: calc(var(--u) * 2.45);
     line-height: 1.3;
 }
 
 .bc-back__services {
-    margin-bottom: calc(var(--u) * 1.8);
-    color: var(--text);
     font-weight: 600;
 }
 
@@ -422,54 +393,82 @@
 .bc-back__contacts a {
     display: flex;
     align-items: center;
-    gap: calc(var(--u) * 1.2);
+    gap: calc(var(--u) * 1.1);
 }
 
 .bc-back__services .icon,
 .bc-back__contacts .icon {
-    width: calc(var(--u) * 2.6);
-    height: calc(var(--u) * 2.6);
-    color: var(--accent);
+    flex: none;
+    width: calc(var(--u) * 2.4);
+    height: calc(var(--u) * 2.4);
+    color: #f8c4a8;
 }
 
 .bc-back__contacts a {
-    color: var(--muted);
+    color: var(--white);
     text-decoration: none;
     overflow-wrap: anywhere;
 }
 
 .bc-back__contacts a:hover {
-    color: var(--accent);
     text-decoration: underline;
 }
 
-.bc-back__side {
-    grid-area: side;
+/* Réseaux : logos ronds et cliquables */
+.bc-back__socials {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: calc(var(--u) * 4);
+    gap: calc(var(--u) * 1.4);
 }
 
-/* QR code */
+.bc-back__socials a {
+    display: grid;
+    place-items: center;
+    width: calc(var(--u) * 5);
+    height: calc(var(--u) * 5);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    color: var(--white);
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.bc-back__socials .icon {
+    width: calc(var(--u) * 2.7);
+    height: calc(var(--u) * 2.7);
+}
+
+.bc-back__socials a:hover {
+    background: var(--white);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.bc-back__socials a:active {
+    transform: scale(0.94);
+}
+
+.bc-back__info :focus-visible {
+    outline-color: var(--white);
+}
+
+/* QR code : en bas à gauche, la mention à sa droite */
 .bc-qr {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: calc(var(--u) * 1.2);
-    width: calc(var(--u) * 23);
-    margin: 0;
+    gap: calc(var(--u) * 2);
+    margin: auto 0 0;
 }
 
 .bc-qr__box {
     display: grid;
+    flex: none;
     place-items: center;
-    width: calc(var(--u) * 23);
+    width: calc(var(--u) * 14);
     aspect-ratio: 1;
     overflow: hidden;
-    border-radius: calc(var(--u) * 1.6);
+    padding: calc(var(--u) * 0.6);
+    border-radius: calc(var(--u) * 1.2);
     background: var(--white);
-    box-shadow: 0 0 0 1px var(--line), 0 6px 14px -6px rgba(28, 25, 23, 0.2);
 }
 
 .bc-qr__img {
@@ -497,54 +496,52 @@
 }
 
 .bc-qr__fallback {
-    padding: calc(var(--u) * 1.5);
     color: var(--ink);
-    font-size: calc(var(--u) * 2.6);
+    font-size: calc(var(--u) * 1.8);
     font-weight: 700;
     text-align: center;
     overflow-wrap: anywhere;
 }
 
 .bc-qr__label {
-    color: var(--muted);
-    font-size: calc(var(--u) * 2.5);
+    max-width: calc(var(--u) * 16);
+    color: #fde3d3;
+    font-size: calc(var(--u) * 2.2);
     line-height: 1.3;
-    text-align: center;
 }
 
-/* Appel à l'action */
+/* Scène de bureau */
+.bc-back__visual {
+    position: relative;
+    min-height: calc(var(--u) * 60);
+    overflow: hidden;
+    background: #c9bfb4;
+}
+
+.bc-back__desk {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Appel à l'action posé sur le bureau, en blanc sur le bois */
 .bc-back__cta {
-    flex: 1 1 calc(var(--u) * 23);
-}
-
-.bc-back__cta-text {
-    margin: 0 0 calc(var(--u) * 2);
-    color: var(--ink);
-    font-size: calc(var(--u) * 3);
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-}
-
-.bc-back__cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: calc(var(--u) * 1.2);
-    padding: calc(var(--u) * 1.2) calc(var(--u) * 2.2);
-    border-radius: 999px;
-    background: var(--accent);
+    position: absolute;
+    left: calc(var(--u) * 4);
+    right: calc(var(--u) * 5);
+    bottom: calc(var(--u) * 5);
     color: var(--white);
-    font-size: calc(var(--u) * 2.6);
-    white-space: nowrap;
-    font-weight: 700;
+    font-size: calc(var(--u) * 3);
+    font-style: italic;
+    font-weight: 600;
     line-height: 1.2;
     text-decoration: none;
-    transition: background-color 0.2s, transform 0.2s;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
-.bc-back__cta-btn:hover {
-    background: var(--accent-dark);
-    color: var(--white);
+.bc-back__cta:hover {
+    text-decoration: underline;
 }
 
 /* --- Sous la carte -------------------------------------------------------- */
@@ -610,50 +607,34 @@
         aspect-ratio: 85 / 55;
     }
 
+    /* Recto : scène de bureau (42 %) + panneau (58 %), miroir du verso */
     .bc-face--front .bc-face__content {
-        grid-template-columns: 1fr 34%;
-        grid-template-rows: auto 1fr auto;
-        row-gap: calc(var(--u) * 2.5);
-        grid-template-areas:
-            "logo art"
-            "text art"
-            "foot foot";
+        grid-template-columns: 42% 1fr;
     }
 
-    .bc-front__art {
-        align-self: center;
+    .bc-front__visual {
+        min-height: 0;
     }
 
-    .bc-front__foot {
-        margin-top: calc(var(--u) * 1);
+    .bc-front__panel::before {
+        right: auto;
+        bottom: 0;
+        width: 1px;
+        height: auto;
+        background: linear-gradient(180deg, transparent, #e9b48a 50%, transparent);
     }
 
+    /* Verso : panneau d'informations (58 %) + scène de bureau (42 %) */
     .bc-face--back .bc-face__content {
-        grid-template-columns: 1fr calc(var(--u) * 26);
-        grid-template-areas: "main side";
-        gap: calc(var(--u) * 4);
+        grid-template-columns: 58% 1fr;
     }
 
-    .bc-back__main {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    .bc-back__info {
+        gap: calc(var(--u) * 1.6);
     }
 
-    .bc-back__side {
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: stretch;
-        justify-content: space-between;
-        gap: calc(var(--u) * 2.4);
-    }
-
-    .bc-qr {
-        align-self: center;
-    }
-
-    .bc-back__cta {
-        flex: none;
+    .bc-back__visual {
+        min-height: 0;
     }
 }
 

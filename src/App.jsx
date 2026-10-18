@@ -1,9 +1,9 @@
+import Ambient from "./components/Ambient.jsx";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
 import Services from "./components/Services.jsx";
 import Projects from "./components/Projects.jsx";
-import Process from "./components/Process.jsx";
 import CardFeature from "./components/CardFeature.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
@@ -13,6 +13,7 @@ export default function App() {
   useReveal();
   return (
     <>
+      <Ambient />
       <a href="#contenu" className="skip-link">
         Aller au contenu
       </a>
@@ -22,7 +23,6 @@ export default function App() {
         <About />
         <Services />
         <Projects />
-        <Process />
         <CardFeature />
         <Contact />
       </main>
