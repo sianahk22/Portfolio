@@ -26,6 +26,10 @@
     --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.05);
     --shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 32px rgba(28, 25, 23, 0.07);
     --header-h: 68px;
+    /* Verre dépoli : cartes semi-transparentes au-dessus du fond animé */
+    --glass: rgba(255, 255, 255, 0.5);
+    --glass-strong: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.7);
 }
 
 /* ==========================================================================
@@ -44,12 +48,149 @@ html {
 body {
     margin: 0;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
+    background: #fbf5ef; /* base légèrement teintée, sous les halos */
     color: var(--text);
     font-size: 1.0625rem;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Fond « setup » (composant Ambient.jsx) : couche fixe derrière tout le contenu.
+   Mur crème éclairé de lumières chaudes, lattes de bois à gauche, étagère à LED
+   et plante à droite, lanterne en papier. --sp (0 → 1, défilement), --mx/--my
+   (curseur) sont posées en JavaScript. Seules des propriétés peu coûteuses
+   (transform, translate, opacity) sont animées.
+   ========================================================================== */
+.ambient {
+    --sp: 0;
+    --mx: 50vw;
+    --my: -100vh;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ambient > * {
+    position: absolute;
+}
+
+/* Mur et lumières chaudes qui dérivent lentement */
+.ambient__wall {
+    inset: -10vmax;
+    background:
+        radial-gradient(40vmax 40vmax at 14% 12%, rgba(242, 160, 120, 0.42), transparent 70%),
+        radial-gradient(36vmax 36vmax at 86% 16%, rgba(255, 205, 140, 0.5), transparent 70%),
+        radial-gradient(34vmax 34vmax at 50% 55%, rgba(255, 226, 196, 0.4), transparent 70%),
+        radial-gradient(42vmax 42vmax at 82% 92%, rgba(224, 138, 99, 0.3), transparent 70%),
+        radial-gradient(36vmax 36vmax at 8% 90%, rgba(232, 190, 214, 0.35), transparent 70%),
+        linear-gradient(180deg, #f8f0e6, #f1e4d5 60%, #ead8c4);
+    animation: ambient-drift 32s ease-in-out infinite alternate;
+    translate: 0 calc(var(--sp) * -4vh);
+}
+
+/* Panneau de lattes de bois, rétroéclairé, fondu vers le contenu */
+.ambient__slats {
+    top: -6vh;
+    bottom: -12vh;
+    left: 0;
+    width: min(34vw, 460px);
+    background:
+        linear-gradient(90deg, transparent 70%, rgba(255, 236, 205, 0.7) 99%),
+        repeating-linear-gradient(90deg, #d8bc98 0 16px, #c7a37d 16px 19px, #e2c9a8 19px 20px);
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent), linear-gradient(180deg, transparent, #000 15%, #000 80%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, #000 30%, transparent), linear-gradient(180deg, transparent, #000 15%, #000 80%, transparent);
+    mask-composite: intersect;
+    translate: 0 calc(var(--sp) * -10vh);
+}
+
+/* Lanterne en papier : un globe de lumière douce qui respire */
+.ambient__lantern {
+    left: 6vw;
+    bottom: 8vh;
+    width: 22vmax;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 238, 210, 0.95) 0 12%, rgba(255, 200, 140, 0.45) 30%, transparent 68%);
+    animation: ambient-breathe 7s ease-in-out infinite;
+    translate: 0 calc(var(--sp) * -6vh);
+}
+
+/* Étagère, LED et plante */
+.ambient__shelf {
+    top: calc(var(--header-h) + 4vh);
+    right: 2vw;
+    width: min(36vw, 480px);
+    height: auto;
+    overflow: visible;
+    opacity: 0.85;
+    translate: 0 calc(var(--sp) * -16vh);
+}
+
+.ambient__led {
+    animation: ambient-breathe 9s ease-in-out infinite;
+}
+
+.ambient__vine {
+    transform-box: fill-box;
+    transform-origin: 70% 0;
+    animation: ambient-sway 8s ease-in-out infinite;
+}
+
+/* Lumière qui suit le curseur (souris uniquement) */
+.ambient__cursor {
+    inset: 0;
+    background: radial-gradient(320px circle at var(--mx) var(--my), rgba(255, 196, 140, 0.5), rgba(255, 214, 170, 0.18) 45%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+.ambient.is-lit .ambient__cursor {
+    opacity: 1;
+}
+
+@keyframes ambient-drift {
+    50% {
+        transform: translate3d(3vmax, -2vmax, 0) rotate(4deg);
+    }
+    100% {
+        transform: translate3d(-2vmax, 3vmax, 0) rotate(-3deg) scale(1.05);
+    }
+}
+
+@keyframes ambient-breathe {
+    50% {
+        opacity: 0.6;
+        transform: scale(0.94);
+    }
+}
+
+@keyframes ambient-sway {
+    0%,
+    100% {
+        transform: rotate(-1.6deg);
+    }
+    50% {
+        transform: rotate(1.6deg);
+    }
+}
+
+/* Sur mobile, le décor se fait plus discret pour garder le texte lisible. */
+@media (max-width: 599px) {
+    .ambient__slats {
+        width: 40vw;
+        opacity: 0.35;
+    }
+
+    /* L'étagère et sa plante passeraient derrière le titre : masquées sur petit écran. */
+    .ambient__shelf {
+        display: none;
+    }
 }
 
 h1,
@@ -163,8 +304,9 @@ img {
     padding: 88px 0;
 }
 
+/* Les sections laissent voir le fond animé. */
 .section--soft {
-    background: var(--soft);
+    background: transparent;
 }
 
 .section-header {
@@ -194,9 +336,12 @@ img {
 /* ==========================================================================
    Éléments communs
    ========================================================================== */
+/* Le fond de la carte s'éclaire là où se trouve le curseur (--cx, --cy posées par Ambient.jsx). */
 .card {
-    background: var(--surface);
-    border: 1px solid var(--line);
+    background:
+        radial-gradient(360px circle at var(--cx, -999px) var(--cy, -999px), rgba(255, 210, 165, 0.5), transparent 65%),
+        var(--glass-strong);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 28px;
     box-shadow: var(--shadow-sm);
@@ -318,8 +463,8 @@ img {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(250, 247, 242, 0.88);
-    backdrop-filter: saturate(160%) blur(12px);
+    background: rgba(252, 250, 247, 0.7);
+    backdrop-filter: saturate(160%) blur(14px);
     border-bottom: 1px solid var(--line);
 }
 
@@ -445,10 +590,11 @@ img {
 }
 
 /* ==========================================================================
-   Accueil : texte + bento (photo et tuiles)
+   Accueil : texte + ordinateur 3D
    ========================================================================== */
 .hero {
     padding: 56px 0 88px;
+    overflow-x: clip; /* l'ordinateur incliné ne doit pas créer de défilement horizontal */
 }
 
 .hero__grid {
@@ -461,9 +607,9 @@ img {
     display: inline-block;
     margin-bottom: 22px;
     padding: 6px 14px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-border);
     border-radius: 999px;
-    background: var(--surface);
+    background: var(--glass);
     color: var(--muted);
     font-size: 0.86rem;
     font-weight: 600;
@@ -474,88 +620,321 @@ img {
     font-size: 1.15rem;
 }
 
-.bento {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+/* Entrée du texte d'accueil, élément par élément. */
+.hero__text > * {
+    animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-.bento__photo {
-    grid-column: 1 / -1;
-    margin: 0;
-    aspect-ratio: 16 / 11;
+.hero__text > :nth-child(2) {
+    animation-delay: 0.08s;
+}
+
+.hero__text > :nth-child(3) {
+    animation-delay: 0.16s;
+}
+
+.hero__text > :nth-child(4) {
+    animation-delay: 0.24s;
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(8px);
+    }
+}
+
+/* Ordinateur 3D : toujours ouvert, il flotte doucement et s'incline avec la souris
+   (--rx et --ry sont posées par Hero.jsx). L'écran fait défiler les projets. */
+.laptop-scene {
+    position: relative;
+    padding: 28px 4px 48px;
+    perspective: 1400px;
+    animation: scene-in 1.1s 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.laptop {
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    width: min(100%, 640px);
+    margin: 0 auto;
+    transform-style: preserve-3d;
+    /* Inclinaison légère : plus l'écran est penché, plus son contenu devient flou. */
+    transform: rotateX(calc(4deg + var(--rx))) rotateY(calc(-7deg + var(--ry)));
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    animation: laptop-float 7s ease-in-out infinite;
+}
+
+.laptop__lid {
+    position: relative;
+    padding: 2.4% 2.4% 3.2%;
+    border-radius: 18px 18px 8px 8px;
+    background: linear-gradient(160deg, #3d3734, #1c1917 70%);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 40px 70px -30px rgba(28, 25, 23, 0.55);
+}
+
+/* Petite caméra en haut de l'écran */
+.laptop__lid::before {
+    content: "";
+    position: absolute;
+    top: 0.9%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    border-radius: 50%;
+    background: #57534e;
+}
+
+.laptop__screen {
+    position: relative;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
-    border-radius: var(--radius);
-    background: var(--soft);
-    box-shadow: var(--shadow);
+    border-radius: 6px;
+    background: #faf7f2;
 }
 
-.bento__photo picture,
-.bento__photo img {
+.laptop__slide,
+.laptop__slide img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
 }
 
-.bento__photo img {
+.laptop__slide img {
     object-fit: cover;
+    object-position: top center;
+    /* Zoom sur le haut de la page (titre, accroche) pour qu'on puisse le lire */
+    transform: scale(1.3);
+    transform-origin: 18% 0;
 }
 
-.tile {
-    padding: 18px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--surface);
-    box-shadow: var(--shadow-sm);
+/* La 2e capture apparaît et disparaît en fondu par-dessus la 1re. */
+.laptop__slide--2 {
+    opacity: 0;
+    animation: screen-swap 12s ease-in-out infinite;
 }
 
-.tile p {
-    margin: 0;
+/* Reflet sur la vitre */
+.laptop__screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 38%);
+    pointer-events: none;
 }
 
-.tile__head {
+.laptop__base {
+    position: relative;
+    height: 14px;
+    margin: 0 -7%;
+    border-radius: 2px 2px 16px 16px / 2px 2px 12px 12px;
+    background: linear-gradient(#e7e2db, #b9b1a8);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Encoche pour ouvrir l'écran */
+.laptop__base::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 41%;
+    width: 18%;
+    height: 5px;
+    border-radius: 0 0 6px 6px;
+    background: #a8a097;
+}
+
+.laptop__shadow {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: -30px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(28, 25, 23, 0.28), transparent 70%);
+}
+
+/* Récit au défilement : visible seulement en mode .hero--story (posé par Hero.jsx). */
+.hero__captions,
+.hero__hint {
+    display: none;
+}
+
+/* Récit au défilement (écrans ≥ 960px) : la section est haute, son contenu reste collé
+   à l'écran (sticky) et --p (0 → 1) suit la progression.
+   --a : le texte s'efface et l'ordinateur vient au centre (p de 0,08 à 0,38) ;
+   --b : l'écran passe au 2e projet (p de 0,58 à 0,72). */
+.hero.hero--story {
+    --a: clamp(0, (var(--p, 0) - 0.08) / 0.3, 1);
+    --b: clamp(0, (var(--p, 0) - 0.58) / 0.14, 1);
+    height: 280vh;
+    padding: 0;
+}
+
+.hero--story .hero__sticky {
+    position: sticky;
+    top: var(--header-h);
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px !important;
+    height: calc(100vh - var(--header-h));
+    height: calc(100svh - var(--header-h));
+}
+
+.hero--story .hero__grid {
+    width: 100%;
+}
+
+.hero--story .hero__text {
+    opacity: calc(1 - var(--a) * 1.6);
+    transform: translateX(calc(var(--a) * -48px));
+    filter: blur(calc(var(--a) * 8px));
+}
+
+.hero--story.is-past .hero__text {
+    visibility: hidden;
+}
+
+.hero--story .hero__stage {
+    position: relative;
+    /* Recentrage : la colonne de l'ordinateur (1,1 part) se décale vers le milieu de la grille */
+    transform: translateX(calc(var(--a) * (-40.9% - 32px)));
+}
+
+.hero--story .laptop {
+    transform: rotateX(calc(4deg * (1 - var(--a)) + var(--rx))) rotateY(calc(-7deg * (1 - var(--a)) + var(--ry)));
+}
+
+.hero--story .laptop__slide--2 {
+    animation: none;
+    opacity: var(--b);
+}
+
+.hero--story .float-chip {
+    opacity: calc(1 - var(--a) * 2);
+}
+
+.hero--story .hero__captions {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 3.4em;
+    margin-top: -4px;
+    text-align: center;
+}
+
+.hero__caption {
+    position: absolute;
+    inset: 0;
+    line-height: 3.4em;
     color: var(--ink);
-    font-size: 0.9rem;
+    font-size: 1.15rem;
     font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
-.tile__checks li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.88rem;
-    line-height: 1.8;
+.hero__caption--2 {
+    opacity: var(--b);
+    transform: translateY(calc((1 - var(--b)) * 14px));
 }
 
-.tile__checks .icon {
-    color: var(--success);
-}
-
-.tile--stack {
+/* Invitation à faire défiler, qui disparaît dès les premiers pixels */
+.hero--story .hero__hint {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background: var(--ink);
-    border-color: var(--ink);
-}
-
-.tile__label {
-    color: #a8a29e;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.tile__value {
-    margin-top: 12px !important;
-    color: var(--white);
-    font-size: 1.05rem;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.74rem;
     font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: calc(1 - var(--p, 0) * 10);
+    transform: translateX(-50%);
+}
+
+.hero__hint::after {
+    content: "";
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(var(--accent), transparent) no-repeat;
+    background-size: 100% 50%;
+    animation: hint-line 1.8s ease-in-out infinite;
+}
+
+@keyframes hint-line {
+    from {
+        background-position: 0 -100%;
+    }
+    to {
+        background-position: 0 200%;
+    }
+}
+
+/* Pastille flottante : état réel du site */
+.float-chip {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 9px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-strong);
+    box-shadow: var(--shadow);
+    color: var(--ink);
+    font-size: 0.86rem;
+    font-weight: 700;
+    animation: chip-float 6s ease-in-out infinite;
+}
+
+@keyframes scene-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+        filter: blur(10px);
+    }
+}
+
+@keyframes laptop-float {
+    50% {
+        translate: 0 -10px;
+    }
+}
+
+@keyframes chip-float {
+    50% {
+        translate: 0 8px;
+    }
+}
+
+@keyframes screen-swap {
+    0%,
+    42% {
+        opacity: 0;
+    }
+    50%,
+    92% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 /* ==========================================================================
@@ -574,6 +953,11 @@ img {
     max-width: 620px;
     color: var(--muted);
     font-size: 1.1rem;
+}
+
+.about__text strong {
+    color: var(--ink);
+    font-weight: 700;
 }
 
 .facts {
@@ -658,9 +1042,9 @@ img {
     place-items: center;
     padding: 20px;
     background:
-        radial-gradient(circle at 15% 0%, var(--accent-soft), transparent 60%),
-        var(--soft);
-    border-bottom: 1px solid var(--line);
+        radial-gradient(circle at 15% 0%, rgba(248, 235, 227, 0.9), transparent 60%),
+        rgba(243, 238, 230, 0.55);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .project__frame {
@@ -773,63 +1157,6 @@ img {
 }
 
 /* ==========================================================================
-   Méthode
-   ========================================================================== */
-.steps {
-    display: grid;
-    gap: 28px;
-}
-
-.step {
-    padding-top: 18px;
-    border-top: 2px solid var(--ink);
-}
-
-.step__num {
-    display: block;
-    margin-bottom: 10px;
-    color: var(--accent);
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-}
-
-.step p {
-    color: var(--muted);
-    font-size: 0.98rem;
-}
-
-.conditions {
-    margin-top: 48px;
-    padding-top: 28px;
-    border-top: 1px solid #ddd5ca;
-}
-
-.conditions__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 28px;
-}
-
-.conditions__list li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--ink);
-    font-weight: 600;
-}
-
-.conditions__list .icon {
-    color: var(--success);
-}
-
-.conditions__note {
-    margin: 14px 0 0;
-    color: var(--muted);
-    font-size: 0.92rem;
-}
-
-/* ==========================================================================
    Carte professionnelle (section qui mène à /carte/)
    ========================================================================== */
 .section--tight {
@@ -841,11 +1168,11 @@ img {
     gap: 36px;
     align-items: center;
     padding: 32px 24px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     background:
         radial-gradient(circle at 100% 0%, rgba(224, 138, 99, 0.16), transparent 45%),
-        var(--surface);
+        var(--glass-strong);
     box-shadow: var(--shadow);
     overflow: hidden;
 }
@@ -890,12 +1217,11 @@ img {
     width: min(100%, 380px);
     aspect-ratio: 85 / 55;
     overflow: hidden;
-    border: 1px solid rgba(28, 25, 23, 0.06);
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    border: 1px solid rgba(233, 180, 138, 0.25);
     border-radius: calc(var(--m) * 4.5);
-    background:
-        radial-gradient(circle at 92% 8%, rgba(224, 138, 99, 0.22), transparent 42%),
-        radial-gradient(circle at 0% 100%, rgba(168, 70, 31, 0.07), transparent 50%),
-        #fffdf9;
+    background: #1c1715;
     box-shadow:
         0 1px 2px rgba(28, 25, 23, 0.06),
         0 calc(var(--m) * 6) calc(var(--m) * 12) rgba(28, 25, 23, 0.16);
@@ -928,48 +1254,53 @@ img {
     background-position: 0 0;
 }
 
-.card-feature__logo {
-    position: absolute;
-    left: calc(var(--m) * 6);
-    top: calc(var(--m) * 6);
-    width: calc(var(--m) * 11);
-    height: calc(var(--m) * 11);
+/* Miniature du recto : scène de bureau le soir + panneau sombre au liseré doré. */
+.card-feature__desk {
+    width: 100%;
+    height: 100%;
 }
 
-.card-feature__art {
-    position: absolute;
-    right: calc(var(--m) * 3);
-    top: calc(var(--m) * 3);
-    width: calc(var(--m) * 36);
-    height: auto;
+.card-feature__panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: calc(var(--m) * 1.6);
+    min-width: 0;
+    padding: calc(var(--m) * 5);
+    border-left: 1px solid rgba(233, 180, 138, 0.6);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(217, 164, 111, 0.2), transparent 45%),
+        radial-gradient(circle at 0% 100%, rgba(168, 70, 31, 0.28), transparent 55%);
+}
+
+.card-feature__logo {
+    width: calc(var(--m) * 10);
+    height: calc(var(--m) * 10);
+    margin-bottom: calc(var(--m) * 2);
 }
 
 .card-feature__mini p {
-    position: absolute;
-    left: calc(var(--m) * 6);
     margin: 0;
     line-height: 1.15;
     white-space: nowrap;
 }
 
 .card-feature__name {
-    bottom: calc(var(--m) * 20);
-    color: var(--ink);
+    color: var(--white);
     font-size: calc(var(--m) * 7);
     font-weight: 800;
     letter-spacing: -0.03em;
 }
 
 .card-feature__title {
-    bottom: calc(var(--m) * 14.5);
-    color: var(--accent);
-    font-size: calc(var(--m) * 3.6);
+    color: #e9b48a;
+    font-size: calc(var(--m) * 3.4);
     font-weight: 700;
 }
 
-.card-feature__url {
-    bottom: calc(var(--m) * 6);
-    color: var(--muted);
+.card-feature__mini .card-feature__url {
+    margin-top: calc(var(--m) * 2);
+    color: #b9aa9d;
     font-size: calc(var(--m) * 3);
     font-weight: 600;
 }
@@ -991,8 +1322,8 @@ img {
 }
 
 .contact__info {
-    background: var(--soft);
-    border-color: transparent;
+    background: rgba(255, 255, 255, 0.45);
+    border-color: var(--glass-border);
     box-shadow: none;
 }
 
@@ -1137,23 +1468,251 @@ img {
 }
 
 /* ==========================================================================
+   Contact : panneau sombre au contour lumineux (inspiré des interfaces « néon »)
+   Le contour est un dégradé conique qui tourne (--glow-angle) ; à son arrivée,
+   le panneau se redresse en 3D. Le contenu du formulaire ne change pas.
+   ========================================================================== */
+@property --glow-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.contact {
+    position: relative;
+    isolation: isolate;
+    gap: 0;
+    border-radius: 28px;
+    color: #e7e5e4;
+    box-shadow:
+        0 0 60px rgba(224, 138, 99, 0.28),
+        0 0 140px rgba(180, 160, 250, 0.22),
+        0 30px 60px -20px rgba(28, 25, 23, 0.5);
+}
+
+/* Contour lumineux qui tourne */
+.contact::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    z-index: -2;
+    border-radius: inherit;
+    background: conic-gradient(
+        from var(--glow-angle),
+        #e08a63,
+        rgba(224, 138, 99, 0.1) 25%,
+        #b4a0fa 50%,
+        rgba(180, 160, 250, 0.1) 75%,
+        #e08a63
+    );
+    animation: glow-spin 8s linear infinite;
+}
+
+/* Fond sombre du panneau, juste à l'intérieur du contour */
+.contact::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle at 85% 0%, rgba(180, 160, 250, 0.16), transparent 45%),
+        linear-gradient(160deg, #24201d, #141110);
+}
+
+@keyframes glow-spin {
+    to {
+        --glow-angle: 360deg;
+    }
+}
+
+/* Arrivée du panneau : il bascule depuis l'arrière, comme un écran qu'on redresse */
+.js-reveal .contact.reveal {
+    transform: perspective(1400px) rotateX(18deg) translateY(60px) scale(0.96);
+    transform-origin: 50% 100%;
+    transition-duration: 1.1s;
+}
+
+.js-reveal .contact.reveal.is-visible {
+    transform: none;
+}
+
+/* Les deux blocs perdent leur style de carte claire */
+.contact .card {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+.contact .card p {
+    color: #d6d3d1;
+}
+
+/* Bloc de gauche : panneau dégradé terracotta → lilas */
+.contact .contact__info {
+    border-radius: 28px 28px 0 0;
+    background: linear-gradient(150deg, #8a3815, #a8461f 45%, #6b4fa8);
+    color: var(--white);
+}
+
+.contact .contact__info h3 {
+    color: var(--white);
+}
+
+.contact .contact__links a {
+    color: var(--white);
+}
+
+.contact .contact__place,
+.contact .next-steps li {
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.contact .next-steps li::before {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--white);
+}
+
+/* Formulaire sur fond sombre */
+.contact .field label {
+    color: #f5f5f4;
+}
+
+.contact .field input,
+.contact .field select,
+.contact .field textarea {
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fafaf9;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact .field select option {
+    color: var(--ink); /* la liste déroulante native reste claire */
+}
+
+.contact .field ::placeholder {
+    color: #a8a29e;
+}
+
+.contact .field input:focus,
+.contact .field select:focus,
+.contact .field textarea:focus {
+    outline: none;
+    border-color: #e08a63;
+    box-shadow: 0 0 0 4px rgba(224, 138, 99, 0.25), 0 0 24px rgba(224, 138, 99, 0.35);
+}
+
+.contact .field [aria-invalid="true"] {
+    border-color: #fca5a5;
+}
+
+.contact .field__error {
+    color: #fca5a5;
+}
+
+.contact .form__privacy {
+    color: #a8a29e !important;
+}
+
+.contact .form__privacy a {
+    color: #f4a582;
+}
+
+.contact .btn--primary {
+    background: #fafaf9;
+    color: var(--ink);
+    box-shadow: 0 0 30px rgba(224, 138, 99, 0.35);
+}
+
+.contact .btn--primary:hover {
+    background: #e08a63;
+    color: var(--ink);
+}
+
+@media (min-width: 960px) {
+    /* Côté gauche coupé en biais, comme les panneaux « WELCOME » des interfaces néon */
+    .contact .contact__info {
+        align-self: stretch;
+        padding-right: 64px;
+        border-radius: 28px 0 0 28px;
+        clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+    }
+
+    .contact .form {
+        padding: 40px 40px 40px 24px;
+    }
+}
+
+/* ==========================================================================
    Pied de page
    ========================================================================== */
 .footer {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     padding: 64px 0 32px;
     background: var(--ink);
     color: #d6d3d1;
     font-size: 0.95rem;
 }
 
+/* Ligne lumineuse qui glisse en haut du pied de page */
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e08a63, #c4b5fd, #e08a63, transparent);
+    background-size: 200% 100%;
+    animation: footer-line 6s linear infinite;
+}
+
+/* Halo chaud qui dérive lentement derrière le contenu */
+.footer::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -30%;
+    left: -10%;
+    width: 70%;
+    height: 160%;
+    background: radial-gradient(closest-side, rgba(224, 138, 99, 0.2), transparent);
+    pointer-events: none;
+    animation: footer-glow 16s ease-in-out infinite alternate;
+}
+
+@keyframes footer-line {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes footer-glow {
+    to {
+        transform: translateX(60%);
+    }
+}
+
+/* Liens soulignés par un trait qui glisse au survol */
 .footer a {
     color: var(--white);
     text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    transition: background-size 0.3s ease, color 0.2s;
 }
 
-.footer a:hover {
+.footer a:hover,
+.footer a:focus-visible {
     color: var(--white);
-    text-decoration: underline;
+    background-size: 100% 1px;
 }
 
 .brand--light,
@@ -1214,15 +1773,23 @@ img {
 /* ==========================================================================
    Animation d'apparition (désactivée si le visiteur réduit les animations)
    ========================================================================== */
+/* Les blocs glissent vers le haut, le flou se dissipe ; --reveal-delay (posé par
+   useReveal.js) décale les éléments voisins pour un effet en cascade. */
 .js-reveal .reveal {
     opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(32px) scale(0.98);
+    filter: blur(8px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+        filter 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
 }
 
 .js-reveal .reveal.is-visible {
     opacity: 1;
     transform: none;
+    filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1242,12 +1809,20 @@ img {
    Tablette (600px et plus)
    ========================================================================== */
 @media (min-width: 600px) {
+    /* Flou d'arrière-plan réservé aux écrans plus grands : sur téléphone, il ralentirait le défilement. */
+    .card,
+    .card-feature,
+    .badge,
+    .float-chip {
+        -webkit-backdrop-filter: blur(16px) saturate(150%);
+        backdrop-filter: blur(16px) saturate(150%);
+    }
+
     .card-feature {
         padding: 40px;
     }
 
     .services,
-    .steps,
     .form__row {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1280,7 +1855,7 @@ img {
     }
 
     .hero__grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 0.9fr 1.1fr;
         gap: 64px;
     }
 
@@ -1288,10 +1863,6 @@ img {
         grid-template-columns: 1.3fr 0.7fr;
         gap: 72px;
         align-items: end;
-    }
-
-    .steps {
-        grid-template-columns: repeat(4, 1fr);
     }
 
     .project {

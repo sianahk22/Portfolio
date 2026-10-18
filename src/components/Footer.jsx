@@ -19,7 +19,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer__top">
-          <div>
+          <div className="reveal">
             <p className="brand brand--light">
               <Logo size={32} />
               <span>
@@ -30,7 +30,7 @@ export default function Footer() {
             <p className="footer__tagline">{site.tagline}</p>
           </div>
 
-          <nav aria-label="Liens du pied de page">
+          <nav aria-label="Liens du pied de page" className="reveal">
             <ul className="footer__links">
               {nav.map((item) => (
                 <li key={item.href}>
@@ -40,7 +40,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <ul className="footer__links footer__links--contact">
+          <ul className="footer__links footer__links--contact reveal">
             <li>
               <a href={`mailto:${site.email}`}>{site.email}</a>
             </li>

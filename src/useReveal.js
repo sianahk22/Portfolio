@@ -9,6 +9,11 @@ export default function useReveal() {
     if (reduce || !("IntersectionObserver" in window)) return;
 
     const items = document.querySelectorAll(".reveal");
+    // Effet en cascade : chaque bloc attend un peu plus que son voisin précédent.
+    items.forEach((el) => {
+      const siblings = [...el.parentElement.children].filter((c) => c.classList.contains("reveal"));
+      el.style.setProperty("--reveal-delay", `${Math.min(siblings.indexOf(el), 4) * 90}ms`);
+    });
     // Ce qui est déjà à l'écran au chargement s'affiche tout de suite (pas de page vide
     // pour les robots, les captures ou les connexions lentes) ; seul le reste est animé.
     items.forEach((el) => {

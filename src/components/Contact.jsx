@@ -100,7 +100,8 @@ export default function Contact() {
           intro="Vous avez une idée ou un projet ? Écrivez-moi et discutons-en."
         />
 
-        <div className="contact">
+        {/* Panneau sombre au contour lumineux (styles .contact dans styles.css) */}
+        <div className="contact reveal">
           <aside className="card contact__info">
             <h3>Me contacter directement</h3>
             <ul className="contact__links">
